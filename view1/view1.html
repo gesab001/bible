@@ -1,0 +1,67 @@
+
+<div class="container">
+    <div class="card-columns">
+        <div ng-repeat="(title, book) in kjv" class="card" ng-model="id" ng-init='totalverses=book.length' >
+            <div  class="card-header font-weight-bold bg-warning text-uppercase">
+                <a href="#!/view1" class="card-link">{{title}}</a>
+                <select  ng-model="selectedVersion" ng-change="">
+                    <option ng-repeat="(code, name) in versionoptions" value="{{code}}">
+                        {{ name}}
+                  </option>
+                </select>
+                                                  <button ng-click="translate(selectedVersion, title, book[id%book.length].book, id%book.length)">trans</button>
+
+            </div>
+            <div class="card-body  text-center" >
+                 <p class="card-text lead" >{{book[id%book.length].word}}</p>
+
+               <a href="#" class="card-link" >{{book[id%book.length].book + " " + book[id%book.length].chapter + ":" + book[id%book.length].verse}}</a>
+
+            </div>
+            <div class="card-footer text-center bg-danger">
+                <p>{{(id%totalverses)+ " of " + totalverses}}</p>
+
+                <div class="progress">
+                   <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:{{((theTime | date : 'ss')/60)*100+'%'}}"></div>
+                </div>
+                <br>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:{{((id%totalverses+1)/totalverses)*100+'%'}}"></div>
+                </div>    
+            </div>
+        </div>
+    </div>  
+    
+</div>
+
+<!--<div class="container">
+    <div class="card-columns">
+        <div ng-repeat="(bookname, booknumber) in bibles" class="card" ng-model="id" ng-init="totalverses=topics.topics[name].verses.length" >
+            <div  class="card-header font-weight-bold bg-warning text-uppercase">
+                <a href="#!/view2" class="card-link">{{bookname}}</a>
+                <select  ng-model="selectedVersion" ng-change="" >
+                    <option ng-repeat="(code, name) in versionoptions" data-image="https://www.countryflags.io/be/shiny/16.png" value="{{code}">
+                        {{ name }}
+                  </option>
+                </select>
+            </div>
+            <div class="card-body  text-center" >
+                
+               <p class="card-text lead" ng-model="word">{{kjv["Genesis"][][word]}}</p>
+               <a href="#" class="card-link" >{{topics.topics[name].verses[id%topics.topics[name].verses.length].book + " "+ topics.topics[name].verses[id%topics.topics[name].verses.length].chapter + ":"+topics.topics[name].verses[id%topics.topics[name].verses.length].verse}}</a>
+
+            </div>
+            <div class="card-footer text-center bg-danger">
+                <p>{{(id%topics.topics[name].verses.length)+ " of " + totalverses}}</p>
+                <div class="progress">
+                   <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:{{((theTime | date : 'ss')/60)*100+'%'}}"></div>
+                </div>
+                <br>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:{{((id%topics.topics[name].verses.length+1)/totalverses)*100+'%'}}"></div>
+                </div>    
+            </div>
+        </div>
+    </div>  
+    
+</div>-->
