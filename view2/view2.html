@@ -1,4 +1,6 @@
-
+<div ng-if="loading"> 
+<h1>Loading... please wait</h1>
+</div>
 <div class="container">
     <div class="card-columns">
         <div ng-repeat="book in kjv" class="card" ng-model="id" ng-init='totalverses=book.length' >

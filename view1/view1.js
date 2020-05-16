@@ -12,10 +12,13 @@ app.config(['$routeProvider', function($routeProvider) {
 
 .controller('View1Ctrl', function($scope, $http, $interval) {
     //$http.defaults.headers.common["api-key"] = "80e4d9935ef1778c43ecd7801bd4ae4c";
+    $scope.loading = true;
     $scope.kjv = "";
        $http.get("view1/topics3.json")
        .then(function(response) {
          $scope.kjv = response.data;
+         $scope.loading = false;
+
        }, function(response) {
                $scope.kjv = response.data || 'Request failed';
     });

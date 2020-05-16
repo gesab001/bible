@@ -13,9 +13,11 @@ app.config(['$routeProvider', function($routeProvider) {
 .controller('View2Ctrl', function($scope, $http, $interval) {
     //$http.defaults.headers.common["api-key"] = "80e4d9935ef1778c43ecd7801bd4ae4c";
     $scope.kjv = "";
+    $scope.loading = true;
        $http.get("assets/booksAndVerses.json")
        .then(function(response) {
          $scope.kjv = response.data;
+         $scope.loading = false;
        }, function(response) {
                $scope.kjv = response.data || 'Request failed';
     });
