@@ -43,30 +43,44 @@ app.config(['$routeProvider', function($routeProvider) {
         return $scope.currentVerse.word;
     };
    $scope.translate = function(translationversion, title, bookname, id){
-      
-    $scope.translatebook = $scope.kjv[title];
-    $scope.translatetotalverses = $scope.translatebook.length;
-    $scope.translatecurrentid = id;
-    $scope.translatecurrentVerse = $scope.translatebook[$scope.translatecurrentid];
-    $scope.translatebooknumber = $scope.bibles[bookname];
-    $scope.translatechapter = $scope.translatecurrentVerse.chapter;
-    $scope.translateverse = $scope.translatecurrentVerse.verse;
-//
-    $http.get("assets/versions/"+translationversion+"-version.json")
-          .then(function(response) {
-            $scope.translationbible = response.data;
-            try{
-                $scope.translatedword = $scope.translationbible["version"][$scope.translatebooknumber]["book"][$scope.translatechapter]["chapter"][$scope.translateverse]["verse"];
+        $scope.translatebooknumber = $scope.bibles[bookname];   
+        if (translationversion=="textusreceptus" && $scope.translatebooknumber<40){
+                $scope.kjv[title][id].word = "no translation for this version. Try Greek OT";  
+
+        }else if (translationversion=="greekot" && $scope.translatebooknumber>39) {
+                $scope.kjv[title][id].word = "no translation for this version. Try Greek Textus Receptus";  
+
+        }else if (translationversion=="hebrew" && $scope.translatebooknumber>39) {
+                $scope.kjv[title][id].word = "no translation for this version. Try Modern Hebrew";  
+        }
+        else{
+            $scope.kjv[title][id].word = "translating... please wait";  
+            $scope.translatebook = $scope.kjv[title];
+            $scope.translatetotalverses = $scope.translatebook.length;
+            $scope.translatecurrentid = id;
+            $scope.translatecurrentVerse = $scope.translatebook[$scope.translatecurrentid];
+            $scope.translatebooknumber = $scope.bibles[bookname];
+            $scope.translatechapter = $scope.translatecurrentVerse.chapter;
+            $scope.translateverse = $scope.translatecurrentVerse.verse;
+
+            $http.get("assets/versions/"+translationversion+"-version.json")
+                  .then(function(response) {
+                    $scope.translationbible = response.data;
+                    try{
+                        $scope.translatedword = $scope.translationbible["version"][$scope.translatebooknumber]["book"][$scope.translatechapter]["chapter"][$scope.translateverse]["verse"];
                         $scope.kjv[title][id].word = $scope.translatedword;
 
-            }catch(err){
 
-            }
-          
-             
-          }, function(response) {
-                  $scope.translation = response.data || 'Request failed';
-       });
+                    }catch(err){
+                          $scope.kjv[title][id].word = "Sorry. no translation for this version. Perhaps this verse is not available in the King James Version.";      
+                    }
+
+
+                  }, function(response) {
+                          $scope.translation = response.data || 'Request failed';
+               }); 
+        }
+    
 //        
          //get kjv bible
         
