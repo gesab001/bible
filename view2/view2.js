@@ -43,27 +43,34 @@ app.config(['$routeProvider', function($routeProvider) {
         return $scope.currentVerse.word;
     };
    $scope.translate = function(translationversion, bookname, id){
+        $scope.translationbookname = bookname;
+        if ($scope.translationbookname=="Acts (of the Apostles)"){
+           $scope.translationbookname = "Acts";
+ 
+        }
         $scope.translatebooknumber = $scope.bibles[bookname];   
-        if ($scope.translationversion=="textusreceptus" && $scope.translatebooknumber<40){
+        if (translationversion=="textusreceptus" && $scope.translatebooknumber<40){
                 $scope.kjv[bookname][id].word = "no translation for this version. Try Greek OT";  
 
-        }else if ($scope.translationversion=="greekot" && $scope.translatebooknumber>39) {
+        }else if (translationversion=="greekot" && $scope.translatebooknumber>39) {
                 $scope.kjv[bookname][id].word = "no translation for this version. Try Greek Textus Receptus";  
 
-        }else if ($scope.translationversion=="hebrew" && $scope.translatebooknumber>39) {
+        }else if (translationversion=="hebrew" && $scope.translatebooknumber>39) {
                 $scope.kjv[bookname][id].word = "no translation for this version. Try Modern Hebrew";  
         }
         else{
             $scope.kjv[bookname][id].word = "translating... please wait";  
+//                                    $scope.kjv[bookname][id].word = $scope.translationbookname;
+
             $scope.translatebook = $scope.kjv[bookname];
             $scope.translatetotalverses = $scope.translatebook.length;
             $scope.translatecurrentid = id;
             $scope.translatecurrentVerse = $scope.translatebook[$scope.translatecurrentid];
-            $scope.translatebooknumber = $scope.bibles[bookname];
+            $scope.translatebooknumber = $scope.bibles[$scope.translationbookname];
             $scope.translatechapter = $scope.translatecurrentVerse.chapter;
             $scope.translateverse = $scope.translatecurrentVerse.verse;
 
-            $http.get("assets/versions/"+$scope.translationversion+"-version.json")
+            $http.get("assets/versions/"+translationversion+"-version.json")
                   .then(function(response) {
                     $scope.translationbible = response.data;
                     try{
