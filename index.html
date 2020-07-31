@@ -11,7 +11,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="app.css">
   <link rel="stylesheet" href="css/app.css">
+<link rel="apple-touch-icon" href="/icon-192x192.png">
 
+<link rel="manifest" href="./manifest.json" />
+
+
+<script
+  async
+  src="https://unpkg.com/pwacompat"
+  crossorigin="anonymous"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  // sw.js can literally be empty, but must exist
+  navigator.serviceWorker.register('/sw.js');
+}
+</script>
       <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
