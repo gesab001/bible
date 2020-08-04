@@ -19,7 +19,7 @@ app.config(['$routeProvider', function($routeProvider) {
        $http.get("assets/booksAndVerses.json")
        .then(function(response) {
          $scope.kjv = response.data;
-         $scope.bookData[$scope.selectedBook] = $scope.kjv[$scope.selectedBook];
+         $scope.bookData = $scope.kjv;
          $scope.loading = false;
        }, function(response) {
                $scope.kjv = response.data || 'Request failed';

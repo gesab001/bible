@@ -19,7 +19,7 @@ app.config(['$routeProvider', function($routeProvider) {
        $http.get("view1/topics3.json")
        .then(function(response) {
          $scope.kjv = response.data;
-         $scope.bookData[$scope.selectedTopic] = $scope.kjv[$scope.selectedTopic];
+         $scope.bookData = $scope.kjv;
          $scope.loading = false;
 
        }, function(response) {
