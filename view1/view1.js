@@ -13,15 +13,27 @@ app.config(['$routeProvider', function($routeProvider) {
 .controller('View1Ctrl', function($scope, $http, $interval) {
     //$http.defaults.headers.common["api-key"] = "80e4d9935ef1778c43ecd7801bd4ae4c";
     $scope.loading = true;
+    $scope.selectedTopic = "show all";
+    $scope.bookData = {};
     $scope.kjv = "";
        $http.get("view1/topics3.json")
        .then(function(response) {
          $scope.kjv = response.data;
+         $scope.bookData = $scope.kjv;
          $scope.loading = false;
 
        }, function(response) {
                $scope.kjv = response.data || 'Request failed';
     });
+    $scope.selectedTopicChanged = function(){
+        $scope.bookData = {};
+        if ($scope.selectedTopic=="show all"){
+            $scope.bookData = $scope.kjv;
+        }else{
+            $scope.bookData[$scope.selectedTopic] = $scope.kjv[$scope.selectedTopic];
+        }
+
+    }
     $scope.booknumbers = "";  
     $scope.id = getCurrentID();
     //get booklist
@@ -127,3 +139,4 @@ function getCurrentID(){
     var currentID=minutesDifference;
     return currentID;
 }
+
