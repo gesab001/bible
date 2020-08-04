@@ -16,7 +16,11 @@ var urlsToCache = [
  './view2/*.json',
  './view2/*.js',
  './view2/*.html',
- './view2/versions/*.json'
+ './view2/versions/*.json',
+ './view3/*.json',
+ './view3/*.js',
+ './view3/*.html',
+ './view3/versions/*.json'
 ];
 
 window.addEventListener('beforeinstallprompt', (event) => {
