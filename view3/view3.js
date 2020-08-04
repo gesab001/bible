@@ -23,6 +23,8 @@ app.config(['$routeProvider', function($routeProvider) {
        .then(function(response) {
          $scope.kjv = response.data;
          $scope.bookData = $scope.kjv;
+         $scope.bookData[$scope.selectedBook] = $scope.kjv[$scope.selectedBook];
+         $scope.chapterData = $scope.bookData[$scope.selectedBook].filter(item => item.chapter === $scope.selectedChapter);
          $scope.loading = false;
        }, function(response) {
                $scope.kjv = response.data || 'Request failed';
@@ -149,4 +151,3 @@ function getCurrentID(){
     var currentID=minutesDifference;
     return currentID;
 }
-

@@ -139,4 +139,3 @@ function getCurrentID(){
     var currentID=minutesDifference;
     return currentID;
 }
-
