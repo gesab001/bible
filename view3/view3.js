@@ -1,39 +1,42 @@
 'use strict';
 
 
-var app = angular.module('myApp.view1', ['ngRoute']);
+var app = angular.module('myApp.view3', ['ngRoute']);
 
 app.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {
-    templateUrl: 'view1/view1.html',
-    controller: 'View1Ctrl'
+  $routeProvider.when('/view3', {
+    templateUrl: 'view3/view3.html',
+    controller: 'View3Ctrl'
   });
 }])
 
-.controller('View1Ctrl', function($scope, $http, $interval) {
+.controller('View3Ctrl', function($scope, $http, $interval, cssInjector) {
+    cssInjector.add("view3/view3.css");
     //$http.defaults.headers.common["api-key"] = "80e4d9935ef1778c43ecd7801bd4ae4c";
-    $scope.loading = true;
-    $scope.selectedTopic = "show all";
+    $scope.selectedBook = "Genesis";
+    $scope.selectedChapter = "1";
     $scope.bookData = {};
+    $scope.chapterData = [];
     $scope.kjv = "";
-       $http.get("view1/topics3.json")
+    $scope.loading = true;
+       $http.get("assets/booksAndVerses.json")
        .then(function(response) {
          $scope.kjv = response.data;
          $scope.bookData = $scope.kjv;
          $scope.loading = false;
-
        }, function(response) {
                $scope.kjv = response.data || 'Request failed';
     });
-    $scope.selectedTopicChanged = function(){
-        $scope.bookData = {};
-        if ($scope.selectedTopic=="show all"){
-            $scope.bookData = $scope.kjv;
-        }else{
-            $scope.bookData[$scope.selectedTopic] = $scope.kjv[$scope.selectedTopic];
-        }
+    $scope.bookChange = function(element) {
+        $scope.selectedBook = element.currentTarget.value;
+        $scope.bookData[$scope.selectedBook] = $scope.kjv[$scope.selectedBook];
 
-    }
+    };
+    $scope.chapterChange = function(element) {
+        $scope.selectedChapter = parseInt(element.currentTarget.value, 10)+1;
+        $scope.chapterData = $scope.bookData[$scope.selectedBook].filter(item => item.chapter === $scope.selectedChapter);
+
+    };
     $scope.booknumbers = "";  
     $scope.id = getCurrentID();
     //get booklist
@@ -57,24 +60,31 @@ app.config(['$routeProvider', function($routeProvider) {
         $scope.verseNumber = $scope.currentVerse.verse;
         return $scope.currentVerse.word;
     };
-   $scope.translate = function(translationversion, title, bookname, id){
+   $scope.translate = function(translationversion, bookname, id){
+        $scope.translationbookname = bookname;
+        if ($scope.translationbookname=="Acts (of the Apostles)"){
+           $scope.translationbookname = "Acts";
+ 
+        }
         $scope.translatebooknumber = $scope.bibles[bookname];   
         if (translationversion=="textusreceptus" && $scope.translatebooknumber<40){
-                $scope.kjv[title][id].word = "no translation for this version. Try Greek OT";  
+                $scope.kjv[bookname][id].word = "no translation for this version. Try Greek OT";  
 
         }else if (translationversion=="greekot" && $scope.translatebooknumber>39) {
-                $scope.kjv[title][id].word = "no translation for this version. Try Greek Textus Receptus";  
+                $scope.kjv[bookname][id].word = "no translation for this version. Try Greek Textus Receptus";  
 
         }else if (translationversion=="hebrew" && $scope.translatebooknumber>39) {
-                $scope.kjv[title][id].word = "no translation for this version. Try Modern Hebrew";  
+                $scope.kjv[bookname][id].word = "no translation for this version. Try Modern Hebrew";  
         }
         else{
-            $scope.kjv[title][id].word = "translating... please wait";  
-            $scope.translatebook = $scope.kjv[title];
+            $scope.kjv[bookname][id].word = "translating... please wait";  
+//                                    $scope.kjv[bookname][id].word = $scope.translationbookname;
+
+            $scope.translatebook = $scope.kjv[bookname];
             $scope.translatetotalverses = $scope.translatebook.length;
             $scope.translatecurrentid = id;
             $scope.translatecurrentVerse = $scope.translatebook[$scope.translatecurrentid];
-            $scope.translatebooknumber = $scope.bibles[bookname];
+            $scope.translatebooknumber = $scope.bibles[$scope.translationbookname];
             $scope.translatechapter = $scope.translatecurrentVerse.chapter;
             $scope.translateverse = $scope.translatecurrentVerse.verse;
 
@@ -83,11 +93,11 @@ app.config(['$routeProvider', function($routeProvider) {
                     $scope.translationbible = response.data;
                     try{
                         $scope.translatedword = $scope.translationbible["version"][$scope.translatebooknumber]["book"][$scope.translatechapter]["chapter"][$scope.translateverse]["verse"];
-                        $scope.kjv[title][id].word = $scope.translatedword;
+                        $scope.kjv[bookname][id].word = $scope.translatedword;
 
 
                     }catch(err){
-                          $scope.kjv[title][id].word = "Sorry. no translation for this version. Perhaps this verse is not available in the King James Version.";      
+                          $scope.kjv[bookname][id].word = "Sorry. no translation for this version. Perhaps this verse is not available in the King James Version.";      
                     }
 
 
@@ -96,7 +106,7 @@ app.config(['$routeProvider', function($routeProvider) {
                }); 
         }
     
-//        
+        
          //get kjv bible
         
   

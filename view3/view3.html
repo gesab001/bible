@@ -1,41 +1,25 @@
-
 <div ng-if="loading"> 
 <h1>Loading... please wait</h1>
 </div>
-<div class="container">
+<div class="container-fluid">
+    <h1>Books</h1>
+    <div class="d-flex flex-wrap">
+            <button ng-click="bookChange($event)" type="button" ng-repeat="(key, value) in kjv" ng-value="key">{{key}}</button>
+    </div>
    
-    <div class="card-columns">
-        <div ng-repeat="(title, book) in kjv" class="card" ng-model="id" ng-init='totalverses=book.length' >
-            <div  class="card-header font-weight-bold bg-warning text-uppercase">
-                <h3 class="card-title text-center">{{title}}</h3>
-          
-            </div>
-            <div class="card-body  text-center" >
-                 <p class="card-text lead" >{{book[id%book.length].word}}</p>
+</div>
 
-                <p class="card-text" >{{book[id%book.length].book + " " + book[id%book.length].chapter + ":" + book[id%book.length].verse}}</p>
-                <select  ng-model="selectedVersion" ng-change="">
-                    <option ng-repeat="(code, name) in versionoptions" value="{{code}}">
-                        {{ name}}
-                    </option>
-                </select>
-                    <button ng-click="translate(selectedVersion, title, book[id%book.length].book, id%book.length)">translate</button>
+<div class="container-fluid">
+    <h1>Chapters</h1>
+    <div class="d-flex flex-wrap">
 
-            </div>
-            <div class="card-footer text-center bg-danger">
-                <p>{{(id%totalverses)+ " of " + totalverses}}</p>
+      <button ng-click="chapterChange($event)" ng-repeat="x in [].constructor(bookData[selectedBook][bookData[selectedBook].length-1]['chapter']) track by $index" ng-value="$index">{{$index+1}}</button>
+    </div>    
+</div>   
 
-                <div class="progress">
-                   <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:{{((theTime | date : 'ss')/60)*100+'%'}}"></div>
-                </div>
-                <br>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:{{((id%totalverses+1)/totalverses)*100+'%'}}"></div>
-                </div>    
-            </div>
-        </div>
-    </div>  
-    
+<div class="container-fluid">
+    <h1>{{selectedBook}} {{selectedChapter}}</h1>
+    <p ng-repeat="item in chapterData">{{item.verse}}. {{item.word}}</p>
 </div>
 
 <!--<div class="container">
