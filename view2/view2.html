@@ -1,9 +1,14 @@
+<select name="Books" ng-model="selectedBook" ng-change="selectedBookChanged()">
+    <option >show all</option>
+    <option ng-repeat="(key, value) in kjv" >{{key}}</option>
+</select>
+
 <div ng-if="loading"> 
 <h1>Loading... please wait</h1>
 </div>
 <div class="container">
     <div class="card-columns">
-        <div ng-repeat="book in kjv" class="card" ng-model="id" ng-init='totalverses=book.length' >
+        <div ng-repeat="book in bookData" class="card" ng-model="id" ng-init='totalverses=book.length' >
             <div  class="card-header font-weight-bold bg-warning text-uppercase">
                 <h3 class="card-title text-center">{{book[id%book.length].book}}</h3>
              

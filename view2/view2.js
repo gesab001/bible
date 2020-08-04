@@ -13,14 +13,26 @@ app.config(['$routeProvider', function($routeProvider) {
 .controller('View2Ctrl', function($scope, $http, $interval) {
     //$http.defaults.headers.common["api-key"] = "80e4d9935ef1778c43ecd7801bd4ae4c";
     $scope.kjv = "";
+    $scope.selectedBook = "show all";
+    $scope.bookData = {};
     $scope.loading = true;
        $http.get("assets/booksAndVerses.json")
        .then(function(response) {
          $scope.kjv = response.data;
+         $scope.bookData[$scope.selectedBook] = $scope.kjv[$scope.selectedBook];
          $scope.loading = false;
        }, function(response) {
                $scope.kjv = response.data || 'Request failed';
     });
+     $scope.selectedBookChanged = function(){
+        $scope.bookData = {};
+        if ($scope.selectedBook=="show all"){
+            $scope.bookData = $scope.kjv;
+        }else{
+            $scope.bookData[$scope.selectedBook] = $scope.kjv[$scope.selectedBook];
+        }
+
+    }
     $scope.booknumbers = "";  
     $scope.id = getCurrentID();
     //get booklist
@@ -133,3 +145,4 @@ function getCurrentID(){
     var currentID=minutesDifference;
     return currentID;
 }
+
