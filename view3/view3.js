@@ -4,17 +4,25 @@
 var app = angular.module('myApp.view3', ['ngRoute']);
 
 app.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view3', {
+  $routeProvider.when('/view3', 
+    {templateUrl: 'view3/view3.html',
+    controller: 'View3Ctrl'}).when('/view3/book/:book/chapter/:chapter', {
     templateUrl: 'view3/view3.html',
     controller: 'View3Ctrl'
-  });
+  }).when('/view3/book/:book/chapter/:chapter/verse/:verse', {
+    templateUrl: 'view3/view3.html',
+    controller: 'View3Ctrl'
+  }).otherwise('/view3');
 }])
 
-.controller('View3Ctrl', function($scope, $http, $interval, cssInjector) {
+.controller('View3Ctrl', function($scope, $routeParams, $http, $interval, cssInjector) {
+    $scope.bookParam = $routeParams.book;
+    $scope.chapterParam = $routeParams.chapter;
+    $scope.verseParam = $routeParams.verse;
     cssInjector.add("view3/view3.css");
-    //$http.defaults.headers.common["api-key"] = "80e4d9935ef1778c43ecd7801bd4ae4c";
-    $scope.selectedBook = "Genesis";
-    $scope.selectedChapter = "1";
+    $scope.selectedBook = $scope.bookParam;
+    $scope.selectedChapter = parseInt($scope.chapterParam, 10);
+    $scope.selectedVerse = $scope.verseParam;
     $scope.bookData = {};
     $scope.chapterData = [];
     $scope.kjv = "";
@@ -23,12 +31,13 @@ app.config(['$routeProvider', function($routeProvider) {
        .then(function(response) {
          $scope.kjv = response.data;
          $scope.bookData = $scope.kjv;
-         $scope.bookData[$scope.selectedBook] = $scope.kjv[$scope.selectedBook];
-         $scope.chapterData = $scope.bookData[$scope.selectedBook].filter(item => item.chapter === $scope.selectedChapter);
          $scope.loading = false;
+         $scope.bookData[$scope.selectedBook] = $scope.kjv[$scope.selectedBook];
+         $scope.chapterData = $scope.bookData[$scope.selectedBook].filter(item => item.chapter === $scope.selectedChapter);     
        }, function(response) {
                $scope.kjv = response.data || 'Request failed';
     });
+
     $scope.bookChange = function(element) {
         $scope.selectedBook = element.currentTarget.value;
         $scope.bookData[$scope.selectedBook] = $scope.kjv[$scope.selectedBook];
