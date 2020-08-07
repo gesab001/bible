@@ -1,10 +1,12 @@
 
 <div class="container">
-    <input ng-model="keyword">
+    <input ng-model="keyword" ng-focus="bubble=false">
     <p>{{keyword}}</p>
-Show results: <input type="checkbox" ng-model="myVar" ng-init="myVar = false">
-    
-    <div ng-if="myVar" >
+<!--Show results: <input type="checkbox" ng-model="myVar" ng-init="myVar = false">-->
+    <button class="button" ng-click="bubble=true">search</button>
+        <button class="button" ng-click="bubble=false; keyword=null">clear</button>
+
+    <div ng-if="bubble" >
         <div ng-repeat="(key, value) in kjv" ng-value="key">
             <div ng-repeat= "item  in kjv[key] | filter : {'word': keyword }">
                     <a href="#!/view3?book={{item.book}}&chapter={{item.chapter}}&verse={{item.verse}}">{{item.book}} {{item.chapter}}:{{item.verse}}. {{item.word}}</a>
@@ -13,3 +15,5 @@ Show results: <input type="checkbox" ng-model="myVar" ng-init="myVar = false">
     </div>
  
 </div>
+
+

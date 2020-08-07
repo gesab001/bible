@@ -17,25 +17,17 @@ app.config(['$routeProvider', function($routeProvider) {
 
 .controller('View4Ctrl', function($scope, $routeParams, $http, $interval, cssInjector) {
     $scope.keyword = "Jesus";
+    $scope.bubble = false;
+    $scope.keyword = $routeParams.keyword
     $scope.showresults = true;
-    $scope.bookParam = $routeParams.book;
-    $scope.chapterParam = $routeParams.chapter;
-    $scope.verseParam = $routeParams.verse;
     cssInjector.add("view4/view4.css");
-    $scope.selectedBook = $scope.bookParam;
-    $scope.selectedChapter = parseInt($scope.chapterParam, 10);
-    $scope.selectedVerse = $scope.verseParam;
-    $scope.bookData = {};
-    $scope.chapterData = [];
+
     $scope.kjv = "";
     $scope.loading = true;
        $http.get("assets/booksAndVerses.json")
        .then(function(response) {
          $scope.kjv = response.data;
-         $scope.bookData = $scope.kjv;
-         $scope.loading = false;
-         $scope.bookData[$scope.selectedBook] = $scope.kjv[$scope.selectedBook];
-         $scope.chapterData = $scope.bookData[$scope.selectedBook].filter(item => item.chapter === $scope.selectedChapter);     
+      
        }, function(response) {
                $scope.kjv = response.data || 'Request failed';
     });
@@ -45,6 +37,10 @@ app.config(['$routeProvider', function($routeProvider) {
         $scope.showresults = true;
     };
 
+    $scope.newSearch = function(element) {
+        $scope.bubble = false;
+    };
+    
     $scope.booknumbers = "";  
     $scope.id = getCurrentID();
     //get booklist
