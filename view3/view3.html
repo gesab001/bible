@@ -19,7 +19,7 @@
 </div>   
 
 <div  class="container-fluid">
-    <h1>{{selectedBook}} {{selectedChapter}}{{hexafy}}</h1>
+    <h1 ng-if="selectedBook!=null && selectedChapter!=null">{{selectedBook}} {{selectedChapter}}</h1>
      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
     Slideshow
   </button>
