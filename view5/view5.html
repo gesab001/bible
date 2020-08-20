@@ -1,0 +1,130 @@
+<div ng-if="loading"> 
+<h1>Loading... please wait</h1>
+</div>
+<div class="container-fluid">
+    <h1>Books</h1> 
+
+    <div class="d-flex flex-wrap">
+            <button ng-click="bookChange($event)" type="button" ng-repeat="(key, value) in kjv" ng-value="key">{{key}}</button>
+    </div>
+   
+</div>
+
+<div class="container-fluid">
+    <h1>Chapters</h1>
+    <div class="d-flex flex-wrap">
+
+      <button ng-click="chapterChange($event)" ng-repeat="x in [].constructor(bookData[selectedBook][bookData[selectedBook].length-1]['chapter']) track by $index" ng-value="$index">{{$index+1}}</button>
+    </div>    
+</div>   
+
+<div  class="container-fluid">
+    <h1 ng-if="selectedBook!=null && selectedChapter!=null">{{selectedBook}} {{selectedChapter}}</h1>
+     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Slideshow
+  </button>
+    <div ng-repeat= "item  in bookData[selectedBook] | filter : {'chapter': selectedChapter } : true">
+        <div ng-switch="item.verse==selectedVerse">
+            <div ng-switch-when="true"><p><mark class="bg-danger text-white">{{item.verse}}. {{item.word}}</mark></p></div>
+            <div ng-switch-default><p>{{item.verse}}. {{item.word}}</p></div>
+        </div>
+    </div>
+
+</div>
+
+<div class="container">
+  <!-- Button to Open the Modal -->
+ 
+
+  <!-- The Modal -->
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">{{selectedBook}} {{selectedChapter}}</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+                <div id="demo" class="carousel slide" data-ride="carousel" data-keyboard="true" data-interval="false">
+                  <ul class="carousel-indicators">
+                    <li  ng-repeat="x in [].constructor(chapterData.length) track by $index"  ng-value="$index" data-target="#demo" data-slide-to="{{$index}}" class="active"></li>
+                  </ul>
+                  <div class="carousel-inner" >
+                    <div class="carousel-item active">
+                      <img src="https://gesab001.github.io/assets/images/sunset.jpg" alt="Los Angeles" width="1100" height="500">
+                      <div class="carousel-caption">
+                        <h3>{{selectedBook}} {{selectedChapter}}</h3>
+                        <p></p>
+                      </div>   
+                    </div>
+                    <div class="carousel-item" ng-repeat="item in chapterData">
+                      <img src="https://gesab001.github.io/assets/images/sunset.jpg" alt="Chicago" width="1100" height="500">
+                      <div class="carousel-caption">
+                        <h1>{{item.word}}</h1>
+                        <h3>{{selectedBook}} {{selectedChapter}}:{{item.verse}}</h3>
+
+                      </div>   
+                    </div>
+<!--                    <div class="carousel-item">
+                      <img src="https://gesab001.github.io/assets/images/sunset.jpg" alt="New York" width="1100" height="500">
+                      <div class="carousel-caption">
+                        <h3>New York</h3>
+                        <p>We love the Big Apple!</p>
+                      </div>   
+                    </div>-->
+                  </div>
+                  <a class="carousel-control-prev"  data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                  </a>
+                  <a class="carousel-control-next" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                  </a>
+                </div>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<!--<div class="container">
+    <div class="card-columns">
+        <div ng-repeat="(bookname, booknumber) in bibles" class="card" ng-model="id" ng-init="totalverses=topics.topics[name].verses.length" >
+            <div  class="card-header font-weight-bold bg-warning text-uppercase">
+                <a href="#!/view2" class="card-link">{{bookname}}</a>
+                <select  ng-model="selectedVersion" ng-change="" >
+                    <option ng-repeat="(code, name) in versionoptions" data-image="https://www.countryflags.io/be/shiny/16.png" value="{{code}">
+                        {{ name }}
+                  </option>
+                </select>
+            </div>
+            <div class="card-body  text-center" >
+                
+               <p class="card-text lead" ng-model="word">{{kjv["Genesis"][][word]}}</p>
+               <a href="#" class="card-link" >{{topics.topics[name].verses[id%topics.topics[name].verses.length].book + " "+ topics.topics[name].verses[id%topics.topics[name].verses.length].chapter + ":"+topics.topics[name].verses[id%topics.topics[name].verses.length].verse}}</a>
+
+            </div>
+            <div class="card-footer text-center bg-danger">
+                <p>{{(id%topics.topics[name].verses.length)+ " of " + totalverses}}</p>
+                <div class="progress">
+                   <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:{{((theTime | date : 'ss')/60)*100+'%'}}"></div>
+                </div>
+                <br>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:{{((id%topics.topics[name].verses.length+1)/totalverses)*100+'%'}}"></div>
+                </div>    
+            </div>
+        </div>
+    </div>  
+    
+</div>-->

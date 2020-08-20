@@ -2,7 +2,7 @@
 
 
 var app = angular.module('myApp.view3', ['ngRoute']);
-
+var nextslide = document.getElementById("next");
 app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/view3', 
     {templateUrl: 'view3/view3.html',
@@ -37,7 +37,7 @@ app.config(['$routeProvider', function($routeProvider) {
        }, function(response) {
                $scope.kjv = response.data || 'Request failed';
     });
-
+    
     $scope.bookChange = function(element) {
         $scope.selectedBook = element.currentTarget.value;
         $scope.bookData[$scope.selectedBook] = $scope.kjv[$scope.selectedBook];
@@ -71,6 +71,10 @@ app.config(['$routeProvider', function($routeProvider) {
         $scope.verseNumber = $scope.currentVerse.verse;
         return $scope.currentVerse.word;
     };
+    $scope.changeslide = function (event){
+       changeSlide();   
+    };
+    
    $scope.translate = function(translationversion, bookname, id){
         $scope.translationbookname = bookname;
         if ($scope.translationbookname=="Acts (of the Apostles)"){
@@ -159,4 +163,8 @@ function getCurrentID(){
     var minutesDifference = Math.floor(difference/1000/60);
     var currentID=minutesDifference;
     return currentID;
+}
+
+function changeSlide(){
+
 }

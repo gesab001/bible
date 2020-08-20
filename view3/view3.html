@@ -34,7 +34,7 @@
 
 <div class="container">
   <!-- Button to Open the Modal -->
- 
+  <input ng-keydown="changeslide($event)">
 
   <!-- The Modal -->
   <div class="modal fade" id="myModal">
@@ -48,14 +48,14 @@
         </div>
         
         <!-- Modal body -->
-        <div class="modal-body">
-                <div id="demo" class="carousel slide" data-ride="carousel" data-keyboard="true" data-interval="false">
+        <div class="modal-body" ng-keydown="changeslide($event)" tabindex="0"  >
+                <div id="demo"  class="carousel slide" data-ride="carousel" data-keyboard="true" data-interval="false">
                   <ul class="carousel-indicators">
                     <li  ng-repeat="x in [].constructor(chapterData.length) track by $index"  ng-value="$index" data-target="#demo" data-slide-to="{{$index}}" class="active"></li>
                   </ul>
                   <div class="carousel-inner" >
-                    <div class="carousel-item active">
-                      <img src="https://gesab001.github.io/assets/images/sunset.jpg" alt="Los Angeles" width="1100" height="500">
+                    <div class="carousel-item active"  tabindex="0">
+                      <img  src="https://gesab001.github.io/assets/images/sunset.jpg" alt="Los Angeles" width="1100" height="500">
                       <div class="carousel-caption">
                         <h3>{{selectedBook}} {{selectedChapter}}</h3>
                         <p></p>
@@ -77,12 +77,12 @@
                       </div>   
                     </div>-->
                   </div>
-                  <a class="carousel-control-prev"  data-slide="prev">
+                  <button type="button"  id="prev" class="carousel-control-prev btn btn-link"  data-target="#demo" data-slide="prev">
                     <span class="carousel-control-prev-icon"></span>
-                  </a>
-                  <a class="carousel-control-next" data-slide="next">
+                  </button>
+                  <button type="button" id="next" class="btn btn-link carousel-control-next" data-target="#demo" data-slide="next">
                     <span class="carousel-control-next-icon"></span>
-                  </a>
+                  </button>
                 </div>
         </div>
         
