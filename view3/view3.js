@@ -71,9 +71,7 @@ app.config(['$routeProvider', function($routeProvider) {
         $scope.verseNumber = $scope.currentVerse.verse;
         return $scope.currentVerse.word;
     };
-    $scope.changeslide = function (event){
-       changeSlide();   
-    };
+
     
    $scope.translate = function(translationversion, bookname, id){
         $scope.translationbookname = bookname;
@@ -131,7 +129,7 @@ app.config(['$routeProvider', function($routeProvider) {
         $scope.theTime = new Date();
         $scope.id = getCurrentID();
     }, 1000);
-    //get versions list
+    
 //    $http.get("view1/versions_json.json")
 //    .then(function(response) {
 //
@@ -165,6 +163,8 @@ function getCurrentID(){
     return currentID;
 }
 
-function changeSlide(){
 
-}
+
+function clickOnUpload() {
+
+};
