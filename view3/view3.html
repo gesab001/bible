@@ -48,8 +48,8 @@
         
         <!-- Modal body -->
         <div class="modal-body"  >
-            <div id="demo"  class="carousel slide" data-ride="carousel" data-keyboard="true" data-interval="false" data-wrap="false">
-                  <ul class="carousel-indicators">
+            <div id="demo"  tabindex="0" class="carousel slide" data-ride="carousel" data-keyboard="true" data-interval="false" data-wrap="false">
+                  <ul tabindex="0" class="carousel-indicators">
                     <li  ng-repeat="x in [].constructor(chapterData.length) track by $index"  ng-value="$index" data-target="#demo" data-slide-to="{{$index}}" class="active"></li>
                   </ul>
                   <div class="carousel-inner" >
@@ -62,7 +62,7 @@
                     </div>
                     <div class="carousel-item" ng-repeat="item in chapterData">
                       <img src="https://gesab001.github.io/assets/images/sunset.jpg" alt="Chicago" width="1100" height="500">
-                      <div class="carousel-caption">
+                      <div class="carousel-caption" >
                         <h1>{{item.word}}</h1>
                         <h3>{{selectedBook}} {{selectedChapter}}:{{item.verse}}</h3>
 
