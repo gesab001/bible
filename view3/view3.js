@@ -55,6 +55,15 @@ app.config(['$routeProvider', function($routeProvider) {
         console.log($scope.chapterData);
 
     };
+    
+
+    $scope.markWord = function(word) {
+        //console.log(word);
+        var wordlist = word.split(" ");
+        //console.log(result);
+        return wordlist;
+
+    };
     $scope.decreaseFont = function() {
         console.log('decrease font');
        var el = document.getElementsByClassName("wordFontSize");

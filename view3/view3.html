@@ -33,7 +33,7 @@
     <div ng-repeat= "item  in bookData[selectedBook] | filter : {'chapter': selectedChapter } : true">
         <div ng-switch="item.verse==selectedVerse">
             <div ng-switch-when="true"><p class="wordFontSize"><mark class="bg-danger text-white">{{item.verse}}. {{item.word}}</mark></p></div>
-            <div ng-switch-default><p class="wordFontSize" >{{item.verse}}. {{item.word}}</p></div>
+            <div ng-switch-default><span class="wordFontSize ">{{item.verse}}. </span><span class="wordFontSize " ng-repeat="word in markWord(item.word) track by $index" ><a href="https://www.google.com/search?channel=fs&q=google+dictionary#dobs={{word}}" target="_blank" class="markThisWord">{{word}}</a> </span></div>
         </div>
     </div>
 
@@ -77,7 +77,8 @@
                     <div class="carousel-item" ng-repeat="x in [].constructor(chapterData.length) track by $index">
                       <img src="https://gesab001.github.io/assets/images/sunset.jpg" alt="Chicago" width="1100" height="500">
                       <div class="carousel-caption" >
-                        <h1 class="wordFontSize">{{chapterData[$index].word}}</h1>
+                       <!-- <h1 class="wordFontSize">{{chapterData[$index].word}}</h1>-->
+                        <span class="wordFontSize" ng-repeat="word in markWord(chapterData[$index].word) track by $index" ><a href="https://www.google.com/search?channel=fs&q=google+dictionary#dobs={{word}}" target="_blank" class="markThisWord slideShow">{{word}}</a> </span>
                         <h3 class="wordFontSize" >{{selectedBook}} {{selectedChapter}}:{{chapterData[$index].verse}}</h3>
 
                       </div>   
