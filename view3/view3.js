@@ -16,6 +16,7 @@ app.config(['$routeProvider', function($routeProvider) {
 }])
 
 .controller('View3Ctrl', function($scope, $routeParams, $http, $interval, cssInjector) {
+    $scope.isSlideShow = true;
     $scope.bookParam = $routeParams.book;
     $scope.chapterParam = $routeParams.chapter;
     $scope.verseParam = $routeParams.verse;
@@ -46,6 +47,11 @@ app.config(['$routeProvider', function($routeProvider) {
     $scope.chapterChange = function(element) {
         $scope.selectedChapter = parseInt(element.currentTarget.value, 10)+1;
         $scope.chapterData = $scope.bookData[$scope.selectedBook].filter(item => item.chapter === $scope.selectedChapter);
+
+    };
+    
+    $scope.slideShowOn = function() {
+        console.log($scope.chapterData);
 
     };
     $scope.booknumbers = "";  

@@ -20,7 +20,7 @@
 
 <div  class="container-fluid">
     <h1 ng-if="selectedBook!=null && selectedChapter!=null">{{selectedBook}} {{selectedChapter}}</h1>
-     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+     <button ng-click="slideShowOn()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
     Slideshow
   </button>
     <div ng-repeat= "item  in bookData[selectedBook] | filter : {'chapter': selectedChapter } : true">
@@ -60,11 +60,11 @@
                         <p></p>
                       </div>   
                     </div>
-                    <div class="carousel-item" ng-repeat="item in chapterData">
+                    <div class="carousel-item" ng-repeat="x in [].constructor(chapterData.length) track by $index">
                       <img src="https://gesab001.github.io/assets/images/sunset.jpg" alt="Chicago" width="1100" height="500">
                       <div class="carousel-caption" >
-                        <h1>{{item.word}}</h1>
-                        <h3>{{selectedBook}} {{selectedChapter}}:{{item.verse}}</h3>
+                        <h1>{{chapterData[$index].word}}</h1>
+                        <h3>{{selectedBook}} {{selectedChapter}}:{{chapterData[$index].verse}}</h3>
 
                       </div>   
                     </div>
