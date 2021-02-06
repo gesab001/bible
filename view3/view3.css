@@ -32,3 +32,9 @@ and open the template in the editor.
     overflow: hidden;
     outline:none;
 }
+
+.modal-dialog{
+    
+    max-width: 100%;
+    height: 100%;
+}

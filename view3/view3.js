@@ -17,6 +17,7 @@ app.config(['$routeProvider', function($routeProvider) {
 
 .controller('View3Ctrl', function($scope, $routeParams, $http, $interval, cssInjector) {
     $scope.isSlideShow = true;
+    $scope.currentFontSize = 1;
     $scope.bookParam = $routeParams.book;
     $scope.chapterParam = $routeParams.chapter;
     $scope.verseParam = $routeParams.verse;
@@ -53,6 +54,31 @@ app.config(['$routeProvider', function($routeProvider) {
     $scope.slideShowOn = function() {
         console.log($scope.chapterData);
 
+    };
+    $scope.decreaseFont = function() {
+        console.log('decrease font');
+       var el = document.getElementsByClassName("wordFontSize");
+        $scope.currentFontSize = $scope.currentFontSize - 0.1;
+        if($scope.currentFontSize<1){
+            $scope.currentFontSize = 1;
+        }else{
+            //console.log(el);
+            for (var x=0; x<el.length; x++){
+
+                el[x].style.fontSize = $scope.currentFontSize + "rem";
+            }
+        }
+    };
+    $scope.increaseFont = function() {
+        console.log('increase font');
+        var el = document.getElementsByClassName("wordFontSize");
+        $scope.currentFontSize = $scope.currentFontSize + 0.1;
+        //console.log(el);
+        for (var x=0; x<el.length; x++){
+            
+            
+            el[x].style.fontSize = $scope.currentFontSize + "rem";
+        }
     };
     $scope.booknumbers = "";  
     $scope.id = getCurrentID();

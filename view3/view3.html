@@ -23,10 +23,17 @@
      <button ng-click="slideShowOn()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
     Slideshow
   </button>
+         <button ng-click="increaseFont()" type="button" class="btn btn-primary">
+    +
+  </button>
+         <button ng-click="decreaseFont()" type="button" class="btn btn-primary" >
+    -
+  </button>
+
     <div ng-repeat= "item  in bookData[selectedBook] | filter : {'chapter': selectedChapter } : true">
         <div ng-switch="item.verse==selectedVerse">
-            <div ng-switch-when="true"><p><mark class="bg-danger text-white">{{item.verse}}. {{item.word}}</mark></p></div>
-            <div ng-switch-default><p>{{item.verse}}. {{item.word}}</p></div>
+            <div ng-switch-when="true"><p class="wordFontSize"><mark class="bg-danger text-white">{{item.verse}}. {{item.word}}</mark></p></div>
+            <div ng-switch-default><p class="wordFontSize" >{{item.verse}}. {{item.word}}</p></div>
         </div>
     </div>
 
@@ -37,18 +44,25 @@
 
   <!-- The Modal -->
   <div class="modal fade" id="myModal">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog">
       <div class="modal-content">
       
         <!-- Modal Header -->
         <div class="modal-header">
           <h4 class="modal-title">{{selectedBook}} {{selectedChapter}}</h4>
+           </button>
+         <button ng-click="increaseFont()" type="button" class="btn btn-primary">
+    +
+  </button>
+         <button ng-click="decreaseFont()" type="button" class="btn btn-primary" >
+    -
+  </button>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         
         <!-- Modal body -->
         <div class="modal-body"  >
-            <div id="demo"  tabindex="0" class="carousel slide" data-ride="carousel" data-keyboard="true" data-interval="false" data-wrap="false">
+            <div ng-if="isSlideShow" id="demo"  tabindex="0" class="carousel slide" data-ride="carousel" data-keyboard="true" data-interval="false" data-wrap="false">
                   <ul tabindex="0" class="carousel-indicators">
                     <li  ng-repeat="x in [].constructor(chapterData.length) track by $index"  ng-value="$index" data-target="#demo" data-slide-to="{{$index}}" class="active"></li>
                   </ul>
@@ -63,8 +77,8 @@
                     <div class="carousel-item" ng-repeat="x in [].constructor(chapterData.length) track by $index">
                       <img src="https://gesab001.github.io/assets/images/sunset.jpg" alt="Chicago" width="1100" height="500">
                       <div class="carousel-caption" >
-                        <h1>{{chapterData[$index].word}}</h1>
-                        <h3>{{selectedBook}} {{selectedChapter}}:{{chapterData[$index].verse}}</h3>
+                        <h1 class="wordFontSize">{{chapterData[$index].word}}</h1>
+                        <h3 class="wordFontSize" >{{selectedBook}} {{selectedChapter}}:{{chapterData[$index].verse}}</h3>
 
                       </div>   
                     </div>
