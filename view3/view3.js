@@ -53,10 +53,11 @@ app.config(['$routeProvider', function($routeProvider) {
     
     $scope.slideShowOn = function() {
         console.log($scope.chapterData);
+        $scope.setFontSize();
 
     };
     
-
+    
     $scope.markWord = function(word) {
         //console.log(word);
         var wordlist = word.split(" ");
@@ -64,6 +65,18 @@ app.config(['$routeProvider', function($routeProvider) {
         return wordlist;
 
     };
+    $scope.setFontSize = function() {   
+        $scope.currentFontSize = getFontSize(); 
+
+        var el = document.getElementsByClassName("wordFontSize");
+        //console.log(el);
+        for (var x=0; x<el.length; x++){              
+           el[x].style.fontSize = $scope.currentFontSize + "rem";
+        }
+        
+    };
+
+
     $scope.decreaseFont = function() {
         console.log('decrease font');
        var el = document.getElementsByClassName("wordFontSize");
@@ -77,6 +90,8 @@ app.config(['$routeProvider', function($routeProvider) {
                 el[x].style.fontSize = $scope.currentFontSize + "rem";
             }
         }
+        saveFontSize($scope.currentFontSize); 
+
     };
     $scope.increaseFont = function() {
         console.log('increase font');
@@ -88,6 +103,10 @@ app.config(['$routeProvider', function($routeProvider) {
             
             el[x].style.fontSize = $scope.currentFontSize + "rem";
         }
+        saveFontSize($scope.currentFontSize); 
+
+      
+
     };
     $scope.booknumbers = "";  
     $scope.id = getCurrentID();
@@ -209,3 +228,15 @@ function getCurrentID(){
 function clickOnUpload() {
 
 };
+
+function getFontSize(){
+    if (localStorage.getItem("fontSizeBibleSlideshow") === null) {
+        localStorage.setItem("fontSizeBibleSlideshow", "1");     
+    }
+    var savedSize = localStorage.getItem("fontSizeBibleSlideshow");
+    return parseInt(savedSize);
+}
+
+function saveFontSize(currentFontSize){
+     localStorage.setItem("fontSizeBibleSlideshow", currentFontSize.toString());
+}
