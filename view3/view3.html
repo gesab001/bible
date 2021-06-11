@@ -63,14 +63,15 @@
         <!-- Modal body -->
         <div class="modal-body"  >
             <div ng-if="isSlideShow" id="demo"  tabindex="0" class="carousel slide" data-ride="carousel" data-keyboard="true" data-interval="false" data-wrap="false">
-                  <ul tabindex="0" class="carousel-indicators">
-                    <li  ng-repeat="x in [].constructor(chapterData.length) track by $index"  ng-value="$index" data-target="#demo" data-slide-to="{{$index}}" class="active"></li>
-                  </ul>
+                  <ol tabindex="0" class="carousel-indicators">
+				    <li  ng-value="0" data-target="#demo" data-slide-to="0" class="active"></li>
+                    <li  ng-repeat="x in [].constructor(chapterData.length) track by $index"  ng-value="$index+1" data-target="#demo" data-slide-to="{{$index+1}}" class="active">{{$index+1}}</li>
+                  </ol>
                   <div class="carousel-inner" >
                     <div class="carousel-item active" >
                       <img src="https://gesab001.github.io/assets/images/sunset.jpg" alt="Los Angeles" width="1100" height="500">
                       <div class="carousel-caption">
-                        <h3>{{selectedBook}} {{selectedChapter}}</h3>
+                        <h3>{{selectedBook}} {{selectedChapter}}</h3> 
                         <p></p>
                       </div>   
                     </div>

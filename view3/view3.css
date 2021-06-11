@@ -56,3 +56,22 @@ and open the template in the editor.
    font-weight: bold;     
     
 }
+
+.carousel-indicators li {
+      text-indent: 0;
+      margin: 0 2px;
+      text-align: center;
+      height: 25px;
+      border: none;
+      border-radius: 100%;
+
+      color: #fff;
+      background-color: #999;
+      transition: all 0.25s ease;
+      &.active, &:hover {
+        margin: 0 2px;
+
+        height: 50px;
+        background-color: #337ab7;        
+      }	
+}
