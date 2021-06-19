@@ -16,7 +16,7 @@ app.config(['$routeProvider', function($routeProvider) {
     $scope.selectedTopic = "show all";
     $scope.bookData = {};
     $scope.kjv = "";
-       $http.get("http://20.70.176.210/php/bible/select.php")
+       $http.get("https://20.70.176.210/php/bible/select.php")
        .then(function(response) {
          $scope.kjv = response.data;
          $scope.bookData = $scope.kjv;
