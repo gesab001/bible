@@ -10,9 +10,10 @@ app.config(['$routeProvider', function($routeProvider) {
   });
 }])
 
-.controller('View6Ctrl', function($scope, $http, $interval) {
+.controller('View6Ctrl', function($scope, $http, $interval, cssInjector) {
     //$http.defaults.headers.common["api-key"] = "80e4d9935ef1778c43ecd7801bd4ae4c";
     $scope.loading = true;
+	cssInjector.add("view6/view6.css");
     $scope.selectedTopic = "show all";
     $scope.bookData = {};
     $scope.kjv = "";
