@@ -5,8 +5,17 @@
 <div ng-if="loading"> 
 <h1>Loading... please wait</h1>
 </div>
+<form method="get" action="http://20.70.176.210/php/bible/insert-verse.php?">
+
+  <input type="text" name="book" placeholder="book">
+    <input type="number" name="chapter" placeholder="chapter">
+  <input type="number" name="verse" placeholder="verse">
+  <input type="text" name="word" placeholder="word">
+  <input type="submit"  value="submit">
+
+</form>
 <div class="container-fluid">
-    <div class="-card-deck card-columns" ng-repeat="item in bookData['items']">
+    <div class="-card-deck card-columns" ng-repeat="item in bookData">
         
         <figure  class="card card-flip">
             <div class="card bg-dark text-white">

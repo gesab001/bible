@@ -16,11 +16,12 @@ app.config(['$routeProvider', function($routeProvider) {
     $scope.selectedTopic = "show all";
     $scope.bookData = {};
     $scope.kjv = "";
-       $http.get("https://raw.githubusercontent.com/gesab001/assets/master/bible/memory_verse.json")
+       $http.get("http://20.70.176.210/php/bible/select.php")
        .then(function(response) {
          $scope.kjv = response.data;
          $scope.bookData = $scope.kjv;
          $scope.loading = false;
+		 console.log($scope.bookData);
 
        }, function(response) {
                $scope.kjv = response.data || 'Request failed';
