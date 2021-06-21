@@ -1,11 +1,14 @@
 <!--<select name="Topics" ng-model="selectedTopic" ng-change="selectedTopicChanged()">
     <option >show all</option>
     <option ng-repeat="(title, book) in kjv" >{{title}}</option>
+	
+	https://20.70.176.210/php/bible/insert-verse.php?
+	http://192.168.1.69/php/bible/insert-verse.php?
 </select>-->
 <div ng-if="loading"> 
 <h1>Loading... please wait</h1>
 </div>
-<form method="get" action="https://20.70.176.210/php/bible/insert-verse.php?">
+<form method="get" action="https://20.70.176.210/php/bible/insert-verse.php">
 
   <input type="text" name="book" placeholder="book">
     <input type="number" name="chapter" placeholder="chapter">
@@ -45,17 +48,19 @@
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="max-width:100%">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
+	    <h4 class="modal-title">{{bookData[memoryverseindex]['book']}} {{bookData[memoryverseindex]['chapter']}}:{{bookData[memoryverseindex]['verse']}}</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
+
       </div>
       <div class="modal-body">
-        <p >{{bookData[memoryverseindex] | json}}</p>
-      </div>
+        <h1 style="font-size: 5vw">{{bookData[memoryverseindex]['word']}}</h1>
+        <h3 style="font-size: 5vw">{{bookData[memoryverseindex]['book']}} {{bookData[memoryverseindex]['chapter']}}:{{bookData[memoryverseindex]['verse']}}</h3> 
+ </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
