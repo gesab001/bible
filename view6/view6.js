@@ -20,7 +20,7 @@ app.config(['$routeProvider', function($routeProvider) {
     $scope.bookData = {};
 	$scope.memoryverseindex = 0;
     $scope.kjv = "";
-    $http.get("https://20.70.176.210/php/bible/select.php")
+    $http.get("http://192.168.1.70/php/bible/select.php")
        .then(function(response) {
          $scope.kjv = response.data;
          $scope.bookData = $scope.kjv;
