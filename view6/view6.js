@@ -14,13 +14,14 @@ app.config(['$routeProvider', function($routeProvider) {
     //$http.defaults.headers.common["api-key"] = "80e4d9935ef1778c43ecd7801bd4ae4c";
 	//https://20.70.176.210/php/bible/select.php
 	//https://20.70.176.210/php/bible/select.php
+	$scope.ip = prompt("ip address");
     $scope.loading = true;
 	cssInjector.add("view6/view6.css");
     $scope.selectedTopic = "show all";
     $scope.bookData = {};
 	$scope.memoryverseindex = 0;
     $scope.kjv = "";
-    $http.get("http://192.168.1.70/php/bible/select.php")
+    $http.get("https://"+$scope.ip+"/php/bible/select.php")
        .then(function(response) {
          $scope.kjv = response.data;
          $scope.bookData = $scope.kjv;
