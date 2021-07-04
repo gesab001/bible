@@ -25,7 +25,33 @@ app.config(['$routeProvider', function($routeProvider) {
     $scope.selectedBook = $scope.bookParam;
     $scope.selectedChapter = parseInt($scope.chapterParam, 10);
     $scope.selectedVerse = $scope.verseParam;
+	$scope.selectedWord = null;
     $scope.bookData = {};
+
+		$scope.addAMemoryVerse = function(book, chapter, verse, word){
+			$scope.selectedWord = word;
+			var dropboxtoken = "zfsxgjXKLgoAAAAAAAAAARNIvbSToineCXgZ6zH0w3QkQY4V5J8pbYtHmxfRunhQ";
+            var path = "memoryverses.json";
+			var req = {
+						 method: 'POST',
+						 url: 'https://content.dropboxapi.com/2/files/download',
+						 headers: {
+						   "Authorization": "Bearer " + dropboxtoken,
+						   "Dropbox-API-Arg": "{\"path\": \"/"+path+"\"}"
+						 }
+					  }
+			$http(req) 
+			   .then(function(response) {
+				 var memoryVerses = response.data;
+				 var verseObj = {"book": $scope.selectedBook, "chapter": $scope.selectedChapter, "verse": $scope.selectedVerse, "word": $scope.selectedWord}; 
+				 memoryVerses.push(verseObj);
+                 updateMemoryVerse(memoryVerses);
+			   }, function(response) {
+					   console.log( 'Request failed');
+			});
+    
+    };  
+	
     $scope.chapterData = [];
     $scope.kjv = "";
     $scope.loading = true;
@@ -239,4 +265,32 @@ function getFontSize(){
 
 function saveFontSize(currentFontSize){
      localStorage.setItem("fontSizeBibleSlideshow", currentFontSize.toString());
+}
+
+function updateMemoryVerse(jsondata){
+   console.log("add verse");
+   var dropboxtoken = "zfsxgjXKLgoAAAAAAAAAARNIvbSToineCXgZ6zH0w3QkQY4V5J8pbYtHmxfRunhQ";
+   //var jsondata = {"items": [{"book": "John", "chapter": "3", "verse": "16", "word": "For God"}]};
+   var data = JSON.stringify(jsondata);
+   var path = "memoryverses.json";
+
+   //alert(data);
+   var xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200){
+       //alert("changes saved successfully");
+	}else{
+	    //alert(this.responseText);
+		if (this.responseText.includes("Invalid authorization value") || this.responseText.includes("access token is malformed")){
+		  alert("wrong token");
+		  localStorage.removeItem("dropboxtoken");		  
+		}
+	 }
+ 
+    };
+   xhttp.open("POST", "https://content.dropboxapi.com/2/files/upload", true);
+   xhttp.setRequestHeader("Authorization", "Bearer " + dropboxtoken); 
+   xhttp.setRequestHeader("Dropbox-API-Arg", "{\"path\": \"/"+path+"\",\"mode\": \"overwrite\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}");
+   xhttp.setRequestHeader("Content-Type", "application/octet-stream");
+   xhttp.send(data);
 }
