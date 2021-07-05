@@ -25,10 +25,13 @@ app.config(['$routeProvider', function($routeProvider) {
     $scope.selectedBook = $scope.bookParam;
     $scope.selectedChapter = parseInt($scope.chapterParam, 10);
     $scope.selectedVerse = $scope.verseParam;
+	$scope.selectedMemoryVerseNumber = null;
 	$scope.selectedWord = null;
     $scope.bookData = {};
 
 		$scope.addAMemoryVerse = function(book, chapter, verse, word){
+			$scope.selectedMemoryVerseNumber = verse;
+			console.log($scope.selectedMemoryVerseNumber);
 			$scope.selectedWord = word;
 			var dropboxtoken = "zfsxgjXKLgoAAAAAAAAAARNIvbSToineCXgZ6zH0w3QkQY4V5J8pbYtHmxfRunhQ";
             var path = "memoryverses.json";
@@ -43,7 +46,8 @@ app.config(['$routeProvider', function($routeProvider) {
 			$http(req) 
 			   .then(function(response) {
 				 var memoryVerses = response.data;
-				 var verseObj = {"book": $scope.selectedBook, "chapter": $scope.selectedChapter, "verse": $scope.selectedVerse, "word": $scope.selectedWord}; 
+				 var verseObj = {"book": $scope.selectedBook, "chapter": $scope.selectedChapter, "verse": $scope.selectedMemoryVerseNumber.toString(), "word": $scope.selectedWord}; 
+				 console.log(verseObj);
 				 memoryVerses.push(verseObj);
                  updateMemoryVerse(memoryVerses);
 			   }, function(response) {
