@@ -25,14 +25,15 @@ app.config(['$routeProvider', function($routeProvider) {
     $scope.selectedBook = $scope.bookParam;
     $scope.selectedChapter = parseInt($scope.chapterParam, 10);
     $scope.selectedVerse = $scope.verseParam;
-	$scope.selectedMemoryVerseNumber = null;
-	$scope.selectedWord = null;
+	$scope.selectedMemoryVerseNumber = "";
+	$scope.selectedWord = "";
     $scope.bookData = {};
+    $scope.memoryVerseList = [];
 
 		$scope.addAMemoryVerse = function(book, chapter, verse, word){
-			$scope.selectedMemoryVerseNumber = verse;
+			//$scope.selectedMemoryVerseNumber = verse;
 			console.log($scope.selectedMemoryVerseNumber);
-			$scope.selectedWord = word;
+			//$scope.selectedWord = word;
 			var dropboxtoken = "zfsxgjXKLgoAAAAAAAAAARNIvbSToineCXgZ6zH0w3QkQY4V5J8pbYtHmxfRunhQ";
             var path = "memoryverses.json";
 			var req = {
@@ -46,15 +47,35 @@ app.config(['$routeProvider', function($routeProvider) {
 			$http(req) 
 			   .then(function(response) {
 				 var memoryVerses = response.data;
+				 for (const item of $scope.memoryVerseList) {
+					  $scope.selectedWord += item.word + " ";
+					  $scope.selectedMemoryVerseNumber += item.verse.toString() + ", ";
+					}
+				 $scope.selectedMemoryVerseNumber = $scope.selectedMemoryVerseNumber.slice(0, -2);	
 				 var verseObj = {"book": $scope.selectedBook, "chapter": $scope.selectedChapter, "verse": $scope.selectedMemoryVerseNumber.toString(), "word": $scope.selectedWord}; 
 				 console.log(verseObj);
 				 memoryVerses.push(verseObj);
                  updateMemoryVerse(memoryVerses);
+                               $scope.selectedMemoryVerseNumber = "";
+                               $scope.selectedWord = "";
 			   }, function(response) {
 					   console.log( 'Request failed');
 			});
     
     };  
+    
+    $scope.insertVerse = function(verse){
+          if(verse.isChecked){
+              $scope.memoryVerseList.push(verse);
+
+          }else{
+              var filtered = $scope.memoryVerseList.filter(function(value, index, arr){ 
+                   return value != verse;});
+              $scope.memoryVerseList = filtered;
+              $scope.memoryVerseList.sort((a, b) => (a.verse > b.verse) ? 1 : -1);
+              console.log($scope.memoryVerseList);              
+          }
+    };
 	
     $scope.chapterData = [];
     $scope.kjv = "";

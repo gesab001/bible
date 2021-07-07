@@ -32,8 +32,8 @@
 
     <div ng-repeat= "item  in bookData[selectedBook] | filter : {'chapter': selectedChapter } : true">
         <div ng-switch="item.verse==selectedVerse">
-            <div ng-switch-when="true"><p class="wordFontSize"><mark class="bg-danger text-white">{{item.verse}}. {{item.word}}</mark></p></div>
-            <div ng-switch-default><span class="wordFontSize ">{{item.verse}}. </span><span class="wordFontSize " ng-repeat="word in markWord(item.word) track by $index" ><a href="https://www.google.com/search?channel=fs&q=google+dictionary#dobs={{word}}" target="_blank" class="markThisWord">{{word}}</a> </span></div>
+            <div ng-switch-when="true"><p class="wordFontSize"><mark class="bg-danger text-white"><span><input type="checkbox"></span>{{item.verse}}. {{item.word}}</mark></p></div>
+            <div ng-switch-default><span class="wordFontSize "><input type="checkbox" ng-model="item.isChecked" ng-change="insertVerse(item)"></span>{{item.verse}}. </span><span class="wordFontSize " ng-repeat="word in markWord(item.word) track by $index" ><a href="https://www.google.com/search?channel=fs&q=google+dictionary#dobs={{word}}" target="_blank" class="markThisWord">{{word}}</a> </span></div>
             <button ng-click="addAMemoryVerse(selectedBook, selectedChapter, item.verse, item.word)">memorise this</button>
 			<!--<a href="http://192.168.1.70/php/insert-table.php?dbname=bible&tablename=MemoryVerse&command=INSERT INTO MEMORYVERSE (BOOK,CHAPTER,VERSE,WORD) VALUES ('{{selectedBook}}',{{selectedChapter}},{{item.verse}},'{{item.word}}')">memorise</a> -->           
  </div>
