@@ -10,6 +10,7 @@
         <div ng-repeat="(key, value) in kjv" ng-value="key">
             <div ng-repeat= "item  in kjv[key] | filter : {'word': keyword }">
                     <a href="#!/view3?book={{item.book}}&chapter={{item.chapter}}&verse={{item.verse}}">{{item.book}} {{item.chapter}}:{{item.verse}}. {{item.word}}</a>
+                    <a href="#!/view7?book={{item.book}}&chapter={{item.chapter}}&verse={{item.verse}}&word={{item.word}}">typing</a>
             </div>
         </div>
     </div>

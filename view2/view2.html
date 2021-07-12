@@ -17,6 +17,7 @@
                 <p class="card-text lead" >{{book[id%book.length].word}}</p>
 
                 <a href="#!/view3?book={{book[id%book.length].book}}&chapter={{book[id%book.length].chapter}}&verse={{book[id%book.length].verse}}" class="card-link" >{{book[id%book.length].book + " " + book[id%book.length].chapter + ":" + book[id%book.length].verse}}</a>
+                 <a href="#!/view7?book={{book[id%book.length].book}}&chapter={{book[id%book.length].chapter}}&verse={{book[id%book.length].verse}}&word={{book[id%book.length].word}}">typing</a>
                 <br><select  ng-model="selectedVersion" ng-change="">
                     <option ng-repeat="(code, name) in versionoptions" value="{{code}}">
                         {{ name}}
