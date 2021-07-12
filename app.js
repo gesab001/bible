@@ -9,6 +9,7 @@ angular.module('myApp', [
   'myApp.view4', 
   'myApp.view5', 
   'myApp.view6',
+  'myApp.view7',
   'angular.css.injector',
   'myApp.version'
 ]).

@@ -1,0 +1,7 @@
+<button ng-click="startTest()">begin</button>
+<p>mistakes: {{mistakesCount}} / {{totalKeys}}</p>
+<p>time: {{formatTimer()}}</p>
+<p>accuracy: {{accuracy}}%</p>
+<p>speed: {{netSpeed}} per minute</p>
+<div id="typingText" tabindex="0" ng-keypress="checkKeyPress($event)" ng-keydown="deleteCharacter($event)"><span style="color:grey" ng-repeat="item in characterList track by $index" id="{{$index}}">{{item}}</span></div>
+
