@@ -11,6 +11,7 @@
             <div ng-repeat= "item  in kjv[key] | filter : {'word': keyword }">
                     <a href="#!/view3?book={{item.book}}&chapter={{item.chapter}}&verse={{item.verse}}">{{item.book}} {{item.chapter}}:{{item.verse}}. {{item.word}}</a>
                     <a href="#!/view7?book={{item.book}}&chapter={{item.chapter}}&verse={{item.verse}}&word={{item.word}}">typing</a>
+                                    <a href="https://gesab001.github.io/writing/bible/{{item.word}} ">writing</a>
             </div>
         </div>
     </div>

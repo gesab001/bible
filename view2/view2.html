@@ -18,6 +18,7 @@
 
                 <a href="#!/view3?book={{book[id%book.length].book}}&chapter={{book[id%book.length].chapter}}&verse={{book[id%book.length].verse}}" class="card-link" >{{book[id%book.length].book + " " + book[id%book.length].chapter + ":" + book[id%book.length].verse}}</a>
                  <a href="#!/view7?book={{book[id%book.length].book}}&chapter={{book[id%book.length].chapter}}&verse={{book[id%book.length].verse}}&word={{book[id%book.length].word}}">typing</a>
+                <a href="https://gesab001.github.io/writing/bible/{{book[id%book.length].word}} ">writing</a>
                 <br><select  ng-model="selectedVersion" ng-change="">
                     <option ng-repeat="(code, name) in versionoptions" value="{{code}}">
                         {{ name}}

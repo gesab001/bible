@@ -34,6 +34,8 @@ app.config(['$routeProvider', function($routeProvider) {
         }
 
     }
+    
+
     $scope.booknumbers = "";  
     $scope.id = getCurrentID();
     //get booklist
