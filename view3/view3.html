@@ -37,16 +37,66 @@
             <button ng-click="addAMemoryVerse(selectedBook, selectedChapter, item.verse, item.word)">memorise this</button>
              <a href="#!/view7?book={{selectedBook}}&chapter={{selectedChapter}}&verse={{item.verse}}&word={{item.word}}">typing</a>
                              <a href="https://gesab001.github.io/writing/bible/{{item.word}} ">writing</a>
+		             <button  ng-click="createAStory()" data-toggle="modal" data-target="#creatAStoryModal">Create a Story</button>
 			<!--<a href="http://192.168.1.70/php/insert-table.php?dbname=bible&tablename=MemoryVerse&command=INSERT INTO MEMORYVERSE (BOOK,CHAPTER,VERSE,WORD) VALUES ('{{selectedBook}}',{{selectedChapter}},{{item.verse}},'{{item.word}}')">memorise</a> -->           
  </div>
     </div>
 
 </div>
 
+
+<!-- Modal  CREATE A STORY  -->
+<div id="creatAStoryModal" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="max-width:100%">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+	    <h4 class="modal-title" contenteditable="true">Title</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+      </div>
+      <div class="modal-body">
+             <h3>Poster</h3>
+             <img style="width:200px" src="{{storyData.poster}}"/>
+             <label>Image URL: </label><input ng-model="storyData.poster" ng-change="loadPosterImage()" placeholder="enter image url"/> 
+        <ol>
+           <li ng-repeat="item in memoryVerseList track by $index">
+             <button ng-click="deleteSlide($event, $index)" class="delete">delete this slide</button>
+             <h3>Text</h3>
+             <p  contenteditable="true">{{item.word}}
+             <h3>Slide Image</h3>
+             <img style="width:200px" src="{{storyData.slides[$index].image}}"/>
+             <label>Image URL: </label><input ng-model="storyData.slides[$index].image" ng-change="loadPosterImage()" placeholder="enter image url"/> 
+             <h3>Reference</h3>
+             <label>Book: </label><input type="text" name="book" value="{{item.book}}"/>           
+             <label>Chapter: </label><input type="text" name="chapter" value="{{item.chapter}}"/>           
+             <label>Verse start: </label><input type="text" name="verseStart" value="{{item.verse}}"/>           
+             <label>Verse end: </label><input type="text" name="verseEnd" value="{{item.verse}}"/>    
+                                                                                   
+             <ol>
+               <label>Question: </label><input type="text" name="question" placeholder= "enter question"/>                   
+               <li><label>Answer: </label><input type="text" name="answer" placeholder="enter answer"/></li>
+               <li><label>Choice B: </label><input type="text" name="choiceB" placeholder="enter choice b"></li>   
+               <li><label>Choice C: </label><input type="text" name="choiceC" placeholder="enter choice c"></li>       
+               <li><label>Choice D: </label><input type="text" name="choiceD" placeholder="enter choice d">
+</li>                                                                                                     
+             </ol>
+           </li>
+        </ol>
+ </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <div class="container">
   <!-- Button to Open the Modal -->
 
-  <!-- The Modal -->
+  <!-- The Modal READING SLIDESHOW-->
   <div class="modal fade" id="myModal">
     <div class="modal-dialog">
       <div class="modal-content">

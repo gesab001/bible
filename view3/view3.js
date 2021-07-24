@@ -28,7 +28,25 @@ app.config(['$routeProvider', function($routeProvider) {
 	$scope.selectedMemoryVerseNumber = "";
 	$scope.selectedWord = "";
     $scope.bookData = {};
+    $scope.storyData = {"title": "", "slides": [], "questions": [], "activities": [], "references": [], "poster": "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg"};
+
+    $scope.loadPosterImage = function() {
+         console.log("test");
+    };
     $scope.memoryVerseList = [];
+    $scope.createAStory = function(){
+      $scope.storyData = {"title": "", "slides": [], "questions": [], "activities": [], "references": [], "poster": "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg"};
+      for (const item of $scope.memoryVerseList) {
+	     var text = item.word;
+             var reference = {"book": item.book, "chapter": item.chapter, "verse": {"start": item.verse, "end": item.verse} };
+             var urlImage = "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg";
+             var jsonObj = {"text": text, "reference": reference, "image": urlImage};
+             $scope.storyData.slides.push(jsonObj);
+	}
+
+     console.log($scope.storyData);
+    
+    }
 
 		$scope.addAMemoryVerse = function(book, chapter, verse, word){
 			//$scope.selectedMemoryVerseNumber = verse;
@@ -63,7 +81,16 @@ app.config(['$routeProvider', function($routeProvider) {
 			});
     
     };  
-    
+ 
+    $scope.deleteSlide = function(event, index){
+        //event.target.parentNode.removeChild(event);
+        var olNode = event.target.parentNode;
+        var slideList = event.target.parentNode.parentNode;
+        slideList.removeChild(olNode);
+
+        $scope.storyData.slides = $scope.storyData.slides.splice(index, 1);
+        console.log($scope.storyData.slides);
+    };   
     $scope.insertVerse = function(verse){
           if(verse.isChecked){
               $scope.memoryVerseList.push(verse);
