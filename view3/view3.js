@@ -58,12 +58,9 @@ app.config(['$routeProvider', function($routeProvider) {
 	if(localStorage.getItem("draftStory")) {
           console.log("draftStory exists");
           console.log(JSON.parse(localStorage.getItem("draftStory")));
-          $scope.memoryVerseList = JSON.parse(localStorage.getItem("memoryVerseList")) ;
-          $scope.storyText = "";
-              for (const item of $scope.memoryVerseList) {
-                  $scope.storyText += item.verse + " splithere " + item.word + "\n";
-             }
+        
 	  $scope.storyData = JSON.parse(localStorage.getItem("draftStory"));
+          $scope.generateSlidesDraft();
 	} else {
 	     $scope.storyData = {"title": "title", "slides": [], "questions": [], "activities": [], "references": [], "poster": "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg"};
           $scope.storyText = "";
@@ -134,6 +131,28 @@ app.config(['$routeProvider', function($routeProvider) {
 
 
     };
+
+    $scope.generateSlidesDraft = function() {
+         $scope.memoryVerseList = [];
+         for (const item of $scope.storyData.slides) {
+                     var book = item.reference.book;
+                     var chapter = item.reference.chapter;
+                     var verse = item.reference.verse.start;                   
+		     var word = item.text;
+		     var reference = {"book": book, "chapter": chapter, "verse": verse, "word": word};
+                     $scope.memoryVerseList.push(reference);
+
+		    // $scope.storyData.slides.push(jsonObj);
+		    // $scope.storyData.questions.push(question);
+		}
+
+
+    };
+ 
+    $scope.getFilledQuestions = function(item) {
+       if (item.question!="")
+           return item.question;
+    } 
     $scope.publish = function(){
        if($scope.storyData.title=="title"){
           alert("please enter title for story");
@@ -144,7 +163,12 @@ app.config(['$routeProvider', function($routeProvider) {
                var description = $scope.newStory.description;
                var newcoverposter = $scope.newStory.newcoverposter;
                var video = otherTitle + ".mp4";
-               var newEntry = {"title": title, "otherTitle": otherTitle, "categories": categories, "description": description, "newcoverposter": newcoverposter, "video": video};
+               var thumbnail = $scope.storyData.poster;
+               var newEntry = {"title": title, "otherTitle": otherTitle, "categories": categories, "description": description, "newcoverposter": newcoverposter, "thumbnail": thumbnail, "video": video};
+               var questions = $scope.storyData.questions.filter($scope.getFilledQuestions);
+               //delete empty question slot
+               //console.log($scope.storyData.questions.filter($scope.getFilledQuestions));
+
                var alphabet = otherTitle.charAt(0).toUpperCase();
                var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
                var letterIndex = letters.indexOf(alphabet);
@@ -152,7 +176,7 @@ app.config(['$routeProvider', function($routeProvider) {
                $scope.stories.new.push(newEntry);
                updateStoryDatabase($scope.stories);
 	       updateStory($scope.storyData);
-	    //   $scope.storyData = {"title": "", "slides": [], "questions": [], "activities": [], "references": [], "poster": "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg"};
+	       //$scope.storyData = {"title": "", "slides": [], "questions": questions, "activities": [], "references": [], "poster": "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg"};
 	      // $scope.memoryVerseList = [];
 	     //  localStorage.removeItem("draftStory");
 	     //  localStorage.removeItem("memoryVerseList");
