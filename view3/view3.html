@@ -54,6 +54,9 @@
       <div class="modal-header">
 
 	    <input type="text" ng-model="storyData.title" ng-change="updateTitle()" placeholder= "title"/> 
+	    <input type="text" ng-model="newStory.otherTitle" ng-change="updateTitle()" placeholder= "otherTitle"/> 
+	    <input type="text" ng-model="newStory.description" ng-change="updateTitle()" placeholder= "description"/> 
+	    <input type="text" ng-model="newStory.categories" ng-change="updateTitle()" placeholder= "category"/> 
         <button type="button" class="close" data-dismiss="modal">&times;</button>
 
       </div>
@@ -71,6 +74,7 @@
 	     <textarea  rows="10" cols="30" ng-model="storyData.slides[$index].text" ng-change="updateText()">{{item.word}}</textarea> 
              <h3>Slide Image</h3>
              <img style="width:200px" src="{{storyData.slides[$index].image}}"/>
+             <button ng-click="makeThisTheCoverPoster(storyData.slides[$index].image)">make image as cover</button>
              <label>Image URL: </label><input ng-model="storyData.slides[$index].image" ng-change="loadImage()" placeholder="enter image url"/> 
              <h3>Reference</h3>
              <label>Book: </label><input type="text" name="book" value="{{item.book}}"/>           

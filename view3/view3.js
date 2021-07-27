@@ -28,6 +28,7 @@ app.config(['$routeProvider', function($routeProvider) {
     $scope.selectedMemoryVerseNumber = "";
     $scope.selectedWord = "";
     $scope.bookData = {};
+    $scope.stories = "";
     $scope.storyData = {"title": "", "slides": [], "questions": [], "activities": [], "references": [], "poster": "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg"};
 
     $scope.loadImage = function() {
@@ -35,6 +36,8 @@ app.config(['$routeProvider', function($routeProvider) {
 	     localStorage.setItem("draftStory", JSON.stringify($scope.storyData));
 	     console.log($scope.storyData);
     };
+
+
     $scope.updateTitle = function() {
          console.log("update title");
 	     localStorage.setItem("draftStory", JSON.stringify($scope.storyData));
@@ -45,6 +48,10 @@ app.config(['$routeProvider', function($routeProvider) {
 	     localStorage.setItem("draftStory", JSON.stringify($scope.storyData));
 	     console.log($scope.storyData);
     };
+   $scope.newStory = {"title": "title", "otherTitle": "", "description": "", "categories": "", "newcoverposter": ""};
+   $scope.makeThisTheCoverPoster = function (url){
+       $scope.newStory.newcoverposter = url;
+    }; 
    $scope.storyText = "";
     $scope.memoryVerseList = [];
     $scope.createAStory = function(){
@@ -58,12 +65,12 @@ app.config(['$routeProvider', function($routeProvider) {
              }
 	  $scope.storyData = JSON.parse(localStorage.getItem("draftStory"));
 	} else {
-	     $scope.storyData = {"title": "", "slides": [], "questions": [], "activities": [], "references": [], "poster": "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg"};
+	     $scope.storyData = {"title": "title", "slides": [], "questions": [], "activities": [], "references": [], "poster": "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg"};
           $scope.storyText = "";
               for (const item of $scope.memoryVerseList) {
                   $scope.storyText +=  item.verse + " splithere " + item.word + "\n";
              }
-	      for (const item of $scope.memoryVerseList) {
+	/*      for (const item of $scope.memoryVerseList) {
 		     var text = item.word;
 		     var reference = {"book": item.book, "chapter": item.chapter, "verse": {"start": item.verse, "end": item.verse} };
 		     var urlImage = "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg";
@@ -76,8 +83,28 @@ app.config(['$routeProvider', function($routeProvider) {
 
 	     console.log($scope.storyData);
 	     localStorage.setItem("draftStory", JSON.stringify($scope.storyData));
-	     localStorage.setItem("memoryVerseList", JSON.stringify($scope.memoryVerseList));
+	     localStorage.setItem("memoryVerseList", JSON.stringify($scope.memoryVerseList));*/
 	}
+
+			var dropboxtoken = "ov1Fn0M5gUgAAAAAAAAAAUH__lAitVjxIuHNTfxKDKUvWPyyElPaTre_sLqx26g2";
+            var path = "stories.json";
+			var req = {
+						 method: 'POST',
+						 url: 'https://content.dropboxapi.com/2/files/download',
+						 headers: {
+						   "Authorization": "Bearer " + dropboxtoken,
+						   "Dropbox-API-Arg": "{\"path\": \"/"+path+"\"}"
+						 }
+					  }
+			$http(req) 
+			   .then(function(response) {
+			         $scope.stories = response.data;
+				 console.log($scope.stories.atoz);
+				
+			   }, function(response) {
+					   console.log( 'Request failed');
+			});
+
  
     };
 
@@ -85,7 +112,7 @@ app.config(['$routeProvider', function($routeProvider) {
     $scope.generateSlides = function() {
         var text = document.getElementById("rawText").innerText.split("\n\n\n");
         console.log(text);
-	$scope.storyData = {"title": "", "slides": [], "questions": [], "activities": [], "references": [], "poster": "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg"};
+	$scope.storyData = {"title": "title", "slides": [], "questions": [], "activities": [], "references": [], "poster": "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg"};
          for (const item of text) {
 
                      var verseStart = item.split("splithere")[0].split("-")[0];
@@ -108,12 +135,30 @@ app.config(['$routeProvider', function($routeProvider) {
 
     };
     $scope.publish = function(){
-       $scope.storyData = {"title": "", "slides": [], "questions": [], "activities": [], "references": [], "poster": "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg"};
-       $scope.memoryVerseList = [];
-       localStorage.removeItem("draftStory");
-       localStorage.removeItem("memoryVerseList");
+       if($scope.storyData.title=="title"){
+          alert("please enter title for story");
+       }else{   
+               var title = $scope.storyData.title;
+               var otherTitle = $scope.newStory.otherTitle;
+               var categories = $scope.newStory.categories.split(",");
+               var description = $scope.newStory.description;
+               var newcoverposter = $scope.newStory.newcoverposter;
+               var video = otherTitle + ".mp4";
+               var newEntry = {"title": title, "otherTitle": otherTitle, "categories": categories, "description": description, "newcoverposter": newcoverposter, "video": video};
+               var alphabet = otherTitle.charAt(0).toUpperCase();
+               var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+               var letterIndex = letters.indexOf(alphabet);
+               $scope.stories.atoz[letterIndex].names.push(newEntry);
+               $scope.stories.new.push(newEntry);
+               updateStoryDatabase($scope.stories);
+	       updateStory($scope.storyData);
+	    //   $scope.storyData = {"title": "", "slides": [], "questions": [], "activities": [], "references": [], "poster": "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg"};
+	      // $scope.memoryVerseList = [];
+	     //  localStorage.removeItem("draftStory");
+	     //  localStorage.removeItem("memoryVerseList");
 
-       console.log("removed");
+	    // console.log("removed");
+       }
     };
 
 
@@ -421,6 +466,7 @@ function updateMemoryVerse(jsondata){
    xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200){
        //alert("changes saved successfully");
+        // alert("memory verse added successfully");
 	}else{
 	    //alert(this.responseText);
 		if (this.responseText.includes("Invalid authorization value") || this.responseText.includes("access token is malformed")){
@@ -436,3 +482,68 @@ function updateMemoryVerse(jsondata){
    xhttp.setRequestHeader("Content-Type", "application/octet-stream");
    xhttp.send(data);
 }
+
+
+
+function updateStoryDatabase(jsondata){
+   console.log("add story");
+   console.log(jsondata);
+   var dropboxtoken = "ov1Fn0M5gUgAAAAAAAAAAUH__lAitVjxIuHNTfxKDKUvWPyyElPaTre_sLqx26g2";
+   //var jsondata = {"items": [{"book": "John", "chapter": "3", "verse": "16", "word": "For God"}]};
+   var data = JSON.stringify(jsondata);
+   var path = "stories.json";
+
+   //alert(data);
+   var xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200){
+       //alert("changes saved successfully");
+        // alert("memory verse added successfully");
+	}else{
+	    //alert(this.responseText);
+		if (this.responseText.includes("Invalid authorization value") || this.responseText.includes("access token is malformed")){
+		  alert("wrong token");
+		  localStorage.removeItem("dropboxtoken");		  
+		}
+	 }
+ 
+    };
+   xhttp.open("POST", "https://content.dropboxapi.com/2/files/upload", true);
+   xhttp.setRequestHeader("Authorization", "Bearer " + dropboxtoken); 
+   xhttp.setRequestHeader("Dropbox-API-Arg", "{\"path\": \"/"+path+"\",\"mode\": \"overwrite\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}");
+   xhttp.setRequestHeader("Content-Type", "application/octet-stream");
+   xhttp.send(data);
+}
+
+function updateStory(jsondata){
+   console.log("add story");
+   console.log(jsondata);
+   var dropboxtoken = "ov1Fn0M5gUgAAAAAAAAAAUH__lAitVjxIuHNTfxKDKUvWPyyElPaTre_sLqx26g2";
+   //var jsondata = {"items": [{"book": "John", "chapter": "3", "verse": "16", "word": "For God"}]};
+   var data = JSON.stringify(jsondata);
+   var path = "articles/"+jsondata.title + ".json";
+
+   //alert(data);
+   var xhttp = new XMLHttpRequest();
+   xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200){
+       //alert("changes saved successfully");
+        // alert("memory verse added successfully");
+	}else{
+	    //alert(this.responseText);
+		if (this.responseText.includes("Invalid authorization value") || this.responseText.includes("access token is malformed")){
+		  alert("wrong token");
+		  localStorage.removeItem("dropboxtoken");		  
+		}
+	 }
+ 
+    };
+   xhttp.open("POST", "https://content.dropboxapi.com/2/files/upload", true);
+   xhttp.setRequestHeader("Authorization", "Bearer " + dropboxtoken); 
+   xhttp.setRequestHeader("Dropbox-API-Arg", "{\"path\": \"/"+path+"\",\"mode\": \"overwrite\",\"autorename\": true,\"mute\": false,\"strict_conflict\": false}");
+   xhttp.setRequestHeader("Content-Type", "application/octet-stream");
+   xhttp.send(data);
+}
+
+
+
