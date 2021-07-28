@@ -85,11 +85,11 @@
                 <form>                                                                     
           
 
-               <label>Question: </label><input type="text" ng-model="storyData.questions[$index].question" ng-change=updateQuestion($index) placeholder= "enter question"/>                   
-               <label>Answer: </label><input type="text" ng-model="storyData.questions[$index].answer" ng-change=updateQuestion($index) placeholder="enter answer"/>
-               <label>Choice B: </label><input type="text" ng-model="storyData.questions[$index].choices[1]" ng-change=updateQuestion($index) placeholder="enter choice b">
-               <label>Choice C: </label><input type="text" ng-model="storyData.questions[$index].choices[2]" ng-change=updateQuestion($index) placeholder="enter choice c">    
-               <label>Choice D: </label><input type="text" ng-model="storyData.questions[$index].choices[3]" ng-change=updateQuestion($index) placeholder="enter choice d">
+               <label>Question: </label><input type="text" required ng-model="storyData.questions[$index].question" ng-change=updateQuestion($index) placeholder= "enter question"/>                   
+               <label>Answer: </label><input type="text" required ng-model="storyData.questions[$index].answer" ng-change=updateQuestion($index) placeholder="enter answer"/>
+               <label>Choice B: </label><input type="text" required ng-model="storyData.questions[$index].choices[1]" ng-change=updateQuestion($index) placeholder="enter choice b">
+               <label>Choice C: </label><input type="text" required ng-model="storyData.questions[$index].choices[2]" ng-change=updateQuestion($index) placeholder="enter choice c">    
+               <label>Choice D: </label><input type="text" required ng-model="storyData.questions[$index].choices[3]" ng-change=updateQuestion($index) placeholder="enter choice d">
             
         
 		</form>

@@ -153,10 +153,29 @@ app.config(['$routeProvider', function($routeProvider) {
        if (item.question!="")
            return item.question;
     } 
+
+    
+  /*  $scope.checkStoryExists = function(item) {
+       if (item.names!="")
+           return item.question;
+    } */
+
     $scope.publish = function(){
-       if($scope.storyData.title=="title"){
+       var questions = $scope.storyData.questions.filter($scope.getFilledQuestions);
+     //  console.log($scope.stories.atoz(checkStoryExists);
+       var numberofslides = $scope.storyData.slides.length;
+       console.log("number of slides: " + numberofslides);
+       if(questions.length!=5){
+            alert("you have " + questions.length + " questions.  You have must 5 questions only.");
+       }
+       else if($scope.storyData.title=="title"){
           alert("please enter title for story");
-       }else{   
+       }else if ($scope.newStory.newcoverposter=="") {
+          alert("please choose a cover poster");
+       }else if ($scope.storyData.slides.length!=10){
+           alert("you have " + $scope.storyData.slides + " slides.  You have must have 10 slides.");
+       }
+        else{   
                var title = $scope.storyData.title;
                var otherTitle = $scope.newStory.otherTitle;
                var categories = $scope.newStory.categories.split(",");
@@ -165,15 +184,18 @@ app.config(['$routeProvider', function($routeProvider) {
                var video = otherTitle + ".mp4";
                var thumbnail = $scope.storyData.poster;
                var newEntry = {"title": title, "otherTitle": otherTitle, "categories": categories, "description": description, "newcoverposter": newcoverposter, "thumbnail": thumbnail, "video": video};
-               var questions = $scope.storyData.questions.filter($scope.getFilledQuestions);
+
+
                //delete empty question slot
                //console.log($scope.storyData.questions.filter($scope.getFilledQuestions));
 
                var alphabet = otherTitle.charAt(0).toUpperCase();
                var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
                var letterIndex = letters.indexOf(alphabet);
+               
                $scope.stories.atoz[letterIndex].names.push(newEntry);
                $scope.stories.new.push(newEntry);
+
                updateStoryDatabase($scope.stories);
 	       updateStory($scope.storyData);
 	       //$scope.storyData = {"title": "", "slides": [], "questions": questions, "activities": [], "references": [], "poster": "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg"};
