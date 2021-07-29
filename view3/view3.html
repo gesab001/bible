@@ -68,7 +68,7 @@
  
            <div id="rawText" contenteditable="true" style="white-space: pre" >{{storyText}}</div>    
            <button ng-click="generateSlides()">generate slides</button>      
-           <li ng-repeat="item in memoryVerseList track by $index">
+           <li ng-repeat="item in storyData.slides track by $index">
              <button ng-click="deleteSlide($event, $index)" class="delete">delete this slide</button>
              <h3>Text</h3>
 	     <textarea  rows="10" cols="30" ng-model="storyData.slides[$index].text" ng-change="updateText()">{{item.word}}</textarea> 
