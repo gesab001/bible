@@ -152,8 +152,11 @@ app.config(['$routeProvider', function($routeProvider) {
     $scope.getFilledQuestions = function(item) {
        if (item.question!="")
            return item.question;
-    } 
-
+    }; 
+    $scope.checkForEmptyQuestions = function(item) {
+       if (item.question=="")
+           return true;
+    };
     
   /*  $scope.checkStoryExists = function(item) {
        if (item.names!="")
@@ -164,8 +167,9 @@ app.config(['$routeProvider', function($routeProvider) {
        var questions = $scope.storyData.questions.filter($scope.getFilledQuestions);
      //  console.log($scope.stories.atoz(checkStoryExists);
        var numberofslides = $scope.storyData.slides.length;
+       $scope.storyData.questions = questions;
        console.log("number of slides: " + numberofslides);
-       if(questions.length!=5){
+       if($scope.storyData.questions.length!=5){
             alert("you have " + questions.length + " questions.  You have must 5 questions only.");
        }
        else if($scope.storyData.title=="title"){

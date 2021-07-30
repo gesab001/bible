@@ -77,10 +77,10 @@
              <button ng-click="makeThisTheCoverPoster(storyData.slides[$index].image)">make image as cover</button>
              <label>Image URL: </label><input ng-model="storyData.slides[$index].image" ng-change="loadImage()" placeholder="enter image url"/> 
              <h3>Reference</h3>
-             <label>Book: </label><input type="text" name="book" value="{{item.book}}"/>           
-             <label>Chapter: </label><input type="text" name="chapter" value="{{item.chapter}}"/>           
-             <label>Verse start: </label><input type="text"  value="{{item.verse}}"/>           
-             <label>Verse end: </label><input type="text" ng-model="storyData.slides[$index].reference.verse.end" ng-change="updateText()" value="{{item.verse}}"/>    
+             <label>Book: </label><input type="text" name="book" ng-model="storyData.slides[$index].reference.book" ng-change="updateText()"/>           
+             <label>Chapter: </label><input type="text" name="chapter" ng-model="storyData.slides[$index].reference.chapter" ng-change="updateText()"/>           
+             <label>Verse start: </label><input type="text" ng-model="storyData.slides[$index].reference.verse.start" ng-change="updateText()"/>           
+             <label>Verse end: </label><input type="text" ng-model="storyData.slides[$index].reference.verse.end" ng-change="updateText()" />    
              
                 <form>                                                                     
           
