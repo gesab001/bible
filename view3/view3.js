@@ -65,7 +65,7 @@ app.config(['$routeProvider', function($routeProvider) {
 	     $scope.storyData = {"title": "title", "slides": [], "questions": [], "activities": [], "references": [], "poster": "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg"};
           $scope.storyText = "";
               for (const item of $scope.memoryVerseList) {
-                  $scope.storyText +=  item.verse + " splithere " + item.word + "\n";
+                  $scope.storyText +=  "["+item.book + "," + item.chapter + "," + item.verse + "] " + item.word + "\n";
              }
 	/*      for (const item of $scope.memoryVerseList) {
 		     var text = item.word;
@@ -108,19 +108,25 @@ app.config(['$routeProvider', function($routeProvider) {
 
     $scope.generateSlides = function() {
         var text = document.getElementById("rawText").innerText.split("\n\n\n");
-        console.log(text);
+        //console.log(text);
 	$scope.storyData = {"title": "title", "slides": [], "questions": [], "activities": [], "references": [], "poster": "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg"};
          for (const item of text) {
-
-                     var verseStart = item.split("splithere")[0].split("-")[0];
+                     var referenceText = item.split(/](.+)/i);
                      
-                     var verseEnd = item.split("splithere")[0].split("-")[1];
+                     var referenceSplit = referenceText[0].split(",");
+                     var book = referenceSplit[0].replace("/n");
+                     console.log(book);
+                     book = book.replace("[", "");
+                     var chapter = referenceSplit[1];
+                     var verseStart = referenceSplit[2].split("-")[0];
+                     
+                     var verseEnd = referenceSplit[2].split("-")[1];
                      console.log(verseEnd);
                      if (verseEnd===undefined){
                           verseEnd = verseStart;
                      }
-		     var word = item.split("splithere")[1];
-		     var reference = {"book": $scope.selectedBook, "chapter": $scope.selectedChapter, "verse": {"start": verseStart, "end": verseEnd} };
+		     var word = referenceText[1];
+		     var reference = {"book": book, "chapter": chapter, "verse": {"start": verseStart, "end": verseEnd} };
 		     var urlImage = "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg";
 		     var question = {"question": "", "answer": "", "choices": ["", "", "", ""]};
 		     var jsonObj = {"text": word, "reference": reference, "image": urlImage};
@@ -223,7 +229,7 @@ app.config(['$routeProvider', function($routeProvider) {
     $scope.updateQuestion = function(index) {
        //  var inputs = document.forms["questions0"].getElementsByTagName("input");
          console.log(index);
-      $scope.storyData.questions[index].choices[0] = $scope.storyData.questions[index].answer;
+      $scope.storyData.questions[index].choices.push($scope.storyData.questions[index].answer);
       console.log($scope.storyData.questions);
       localStorage.setItem("draftStory", JSON.stringify($scope.storyData));
    };
@@ -277,7 +283,9 @@ app.config(['$routeProvider', function($routeProvider) {
     };   
     $scope.insertVerse = function(verse){
           if(verse.isChecked){
+              console.log(verse);
               $scope.memoryVerseList.push(verse);
+     
 
           }else{
               var filtered = $scope.memoryVerseList.filter(function(value, index, arr){ 
