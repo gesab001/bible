@@ -156,7 +156,7 @@ app.config(['$routeProvider', function($routeProvider) {
     };
  
     $scope.getFilledQuestions = function(item) {
-       if (item.question!="")
+       if (item.question!="" )
            return item.question;
     }; 
     $scope.checkForEmptyQuestions = function(item) {
@@ -170,12 +170,17 @@ app.config(['$routeProvider', function($routeProvider) {
     } */
 
     $scope.publish = function(){
-       var questions = $scope.storyData.questions.filter($scope.getFilledQuestions);
+       var filteredQuestions = $scope.storyData.questions.filter(function (el) {
+	  return el != null;
+	});
+       var questions =filteredQuestions.filter($scope.getFilledQuestions);
      //  console.log($scope.stories.atoz(checkStoryExists);
        var numberofslides = $scope.storyData.slides.length;
        $scope.storyData.questions = questions;
+      // console.log($scope.storyData.questions);
+
        console.log("number of slides: " + numberofslides);
-       if($scope.storyData.questions.length!=5){
+       if($scope.storyData.questions.length!=5 || $scope.storyData.questions.length==null){
             alert("you have " + questions.length + " questions.  You have must 5 questions only.");
        }
        else if($scope.storyData.title=="title"){
@@ -205,9 +210,13 @@ app.config(['$routeProvider', function($routeProvider) {
                
                $scope.stories.atoz[letterIndex].names.push(newEntry);
                $scope.stories.new.push(newEntry);
+               console.log(JSON.stringify($scope.storyData.questions));
+	       var r = confirm(JSON.stringify($scope.storyData));
+	       if (r==true){
+                 updateStoryDatabase($scope.stories);
+	         updateStory($scope.storyData);
+               }
 
-               updateStoryDatabase($scope.stories);
-	       updateStory($scope.storyData);
 	       //$scope.storyData = {"title": "", "slides": [], "questions": questions, "activities": [], "references": [], "poster": "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg"};
 	      // $scope.memoryVerseList = [];
 	     //  localStorage.removeItem("draftStory");
@@ -227,10 +236,8 @@ app.config(['$routeProvider', function($routeProvider) {
     };
 
     $scope.updateQuestion = function(index) {
-       //  var inputs = document.forms["questions0"].getElementsByTagName("input");
-         console.log(index);
-      $scope.storyData.questions[index].choices.push($scope.storyData.questions[index].answer);
-      console.log($scope.storyData.questions);
+      console.log(JSON.stringify($scope.storyData.questions));
+      $scope.storyData.questions[index].choices[0] = $scope.storyData.questions[index].answer;
       localStorage.setItem("draftStory", JSON.stringify($scope.storyData));
    };
 
