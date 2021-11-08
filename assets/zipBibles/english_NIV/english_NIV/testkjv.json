@@ -1,25 +1,6 @@
 {
-	"type": "version",
-	"version_ref": "kjv",
-	"direction": "LTR",
-	"version": {
-		"1": {
-			"version": "kjv",
-			"book_name": "Genesis",
-			"book_nr": 1,
-			"direction": "LTR",
-			"book": {
-				"1": {
-					"chapter_nr": 1,
-					"chapter": {
-						"1": {
-							"verse_nr": 1,
-							"verse": "In the beginning God created the heaven and the earth.\r\n"
-						}
-					}
-				}
-			}
-		}
-	}
-
+    "book": "Genesis",
+    "chapter": 1,
+    "verse": 1,
+    "word": "In the beginning God created the heaven and the earth.\r\n"
 }
