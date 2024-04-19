@@ -56,6 +56,38 @@ app.config(['$routeProvider', function($routeProvider) {
         $scope.verseNumber = $scope.currentVerse.verse;
         return $scope.currentVerse.word;
     };
+	
+	$scope.fullscreen = function(selectedBook){
+    	  var elemFullscreen = document.getElementById("fullscreen");
+          var elemCardsView = document.getElementById("cardsView");
+		  elemCardsView.style.display = "none";
+		  elemFullscreen.style.display = "block";
+        $scope.bookData = {};
+            $scope.bookData[selectedBook] = $scope.kjv[selectedBook];
+		  if (elemFullscreen.requestFullscreen) {
+             elemFullscreen.requestFullscreen();
+          } else if (elemFullscreen.webkitRequestFullscreen) { /* Safari */
+             elemFullscreen.webkitRequestFullscreen();
+          } else if (elemFullscreen.msRequestFullscreen) { /* IE11 */
+             elemFullscreen.msRequestFullscreen();
+          }
+	};
+    $scope.exitFullScreen = function(selectedTopic){
+    	  var elemFullscreen = document.getElementById("fullscreen");
+          var elemCardsView = document.getElementById("cardsView");
+		  elemCardsView.style.display = "block";
+		  elemFullscreen.style.display = "none";
+		  $scope.bookData = {};
+          $scope.bookData = $scope.kjv;
+		  if (document.exitFullscreen) {
+              document.exitFullscreen();
+          } else if (document.webkitExitFullscreen) { /* Safari */
+             document.webkitExitFullscreen();
+          } else if (document.msExitFullscreen) { /* IE11 */
+             document.msExitFullscreen();
+		  }
+	};
+	
    $scope.translate = function(translationversion, bookname, id){
         $scope.translationbookname = bookname;
         if ($scope.translationbookname=="Acts (of the Apostles)"){

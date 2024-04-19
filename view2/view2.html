@@ -5,7 +5,7 @@
 <div ng-if="loading"> 
 <h1>Loading... please wait</h1>
 </div>
-<div class="container">
+<div id="cardsView" class="container">
     <div class="card-columns">
         <div ng-repeat="book in bookData" class="card" ng-model="id" ng-init='totalverses=book.length' >
             <div  class="card-header font-weight-bold bg-warning text-uppercase">
@@ -19,6 +19,7 @@
                 <a href="#!/view3?book={{book[id%book.length].book}}&chapter={{book[id%book.length].chapter}}&verse={{book[id%book.length].verse}}" class="card-link" >{{book[id%book.length].book + " " + book[id%book.length].chapter + ":" + book[id%book.length].verse}}</a>
                  <a href="#!/view7?book={{book[id%book.length].book}}&chapter={{book[id%book.length].chapter}}&verse={{book[id%book.length].verse}}&word={{book[id%book.length].word}}">typing</a>
                 <a href="https://gesab001.github.io/writing/bible/{{book[id%book.length].word}} ">writing</a>
+				<button ng-click="fullscreen(book[id%book.length].book)">fullscreen</button>
                 <br><select  ng-model="selectedVersion" ng-change="">
                     <option ng-repeat="(code, name) in versionoptions" value="{{code}}">
                         {{ name}}
@@ -39,6 +40,47 @@
             </div>
         </div>
     </div>  
+    
+</div>
+ 
+<div id="fullscreen" style="display:none;" class="containerFullScreen">
+
+        <div style="height:100%;" ng-repeat="book in bookData" class="card" ng-model="id" ng-init='totalverses=book.length' >
+            <div style="display:inline">
+                <h1 >{{book[id%book.length].book}}</h1>
+
+				<a href="#!/view3?book={{book[id%book.length].book}}&chapter={{book[id%book.length].chapter}}&verse={{book[id%book.length].verse}}" >{{book[id%book.length].book + " " + book[id%book.length].chapter + ":" + book[id%book.length].verse}}</a>
+				                <a href="#!/view7?book={{book[id%book.length].book}}&chapter={{book[id%book.length].chapter}}&verse={{book[id%book.length].verse}}&word={{book[id%book.length].word}}">typing</a>
+                <a href="https://gesab001.github.io/writing/bible/{{book[id%book.length].word}} ">writing</a>
+                <<select  ng-model="selectedVersion" ng-change="">
+                    <option ng-repeat="(code, name) in versionoptions" value="{{code}}">
+                        {{ name}}
+                    </option>
+                </select>
+                    <button ng-click="translate(selectedVersion, title, book[id%book.length].book, id%book.length)">translate</button>
+					                <button ng-click="exitFullScreen()">exit fullscreen</button>
+
+            </div>
+            <div class="fullscreen-body" >
+                 <p style="font-size:5vw; font-color:black;" >{{book[id%book.length].word}}</p>
+
+
+
+
+            </div>
+            <div class="fullscreen-footer">
+                <p>{{(id%totalverses)+ " of " + totalverses}}</p>
+
+                <div class="progress">
+                   <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:{{((theTime | date : 'ss')/60)*100+'%'}}"></div>
+                </div>
+                <br>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:{{((id%totalverses+1)/totalverses)*100+'%'}}"></div>
+                </div>    
+            </div>
+        </div>
+ 
     
 </div>
 
