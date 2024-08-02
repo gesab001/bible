@@ -1,0 +1,28 @@
+{
+    "items": [
+        {
+            "book": "John",
+            "chapter": "3",
+            "verse": "16",
+            "word": "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.\r\n"
+        },
+        {
+            "book": "Matthew",
+            "chapter": "7",
+            "verse": "7",
+            "word": "Ask, and it shall be given you; seek, and ye shall find; knock, and it shall be opened unto you:\r\n"
+        },
+        {
+            "book": "Psalms",
+            "chapter": "119",
+            "verse": "105",
+            "word": "Thy word is a lamp unto my feet, and a light unto my path.\r\n"
+        },
+        {
+            "book": "Galatians",
+            "chapter": "5",
+            "verse": "22-23",
+            "word": "But the fruit of the Spirit is love, joy, peace, longsuffering, gentleness, goodness, faith,\r\nMeekness, temperance: against such there is no law.\r\n"
+        }
+    ]
+}
