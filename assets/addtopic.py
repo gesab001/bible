@@ -28,8 +28,8 @@ for x in range(1, 67):
              print(bookname + " " + chapterN + ":" + verseN)
              print(word)    
              newobj = {"book": bookname, "chapter": chapterN, "verse": verseN, "word": word}
-             topicjson[keyword.title()].append(newobj)
+             topicjson[keyword].append(newobj)
 print(len(topicjson))                         
 with open ("topics3.json", "w") as outfile:
-   json.dump(topicjson, outfile, indent=4)
+   json.dump(topicjson, outfile, indent=4, sort_keys=True)
 

@@ -16,7 +16,7 @@ app.config(['$routeProvider', function($routeProvider) {
     $scope.selectedTopic = "show all";
     $scope.bookData = {};
     $scope.kjv = "";
-       $http.get("https://raw.githubusercontent.com/gesab001/assets/master/bible/topics3.json")
+       $http.get("assets/topics3.json")
        .then(function(response) {
          $scope.kjv = response.data;
          $scope.bookData = $scope.kjv;
