@@ -66,7 +66,8 @@
              <label>Image URL: </label><input ng-model="storyData.poster" ng-change="loadImage()" placeholder="enter image url"/> 
         <ol>
  
-           <div id="rawText" contenteditable="true" style="white-space: pre" >{{storyText}}</div>    
+           <div id="rawText" style="width=80%" contenteditable="true" style="white-space: pre" >{{storyText}}</div>   
+
            <button ng-click="generateSlides()">generate slides</button>      
            <li ng-repeat="item in storyData.slides track by $index">
              <button ng-click="deleteSlide($event, $index)" class="delete">delete this slide</button>

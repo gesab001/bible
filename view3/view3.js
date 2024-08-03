@@ -107,8 +107,8 @@ app.config(['$routeProvider', function($routeProvider) {
 
 
     $scope.generateSlides = function() {
-        var text = document.getElementById("rawText").innerText.split("\n\n\n");
-        //console.log(text);
+        var text = document.getElementById("rawText").innerText.split("\n\n");
+        console.log(text);
 	$scope.storyData = {"title": "title", "slides": [], "questions": [], "activities": [], "references": [], "poster": "https://www.hoteldonandres.com/wp-content/uploads/2016/10/blackboard.jpg"};
          for (const item of text) {
                      var referenceText = item.split(/](.+)/i);
