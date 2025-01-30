@@ -1,0 +1,17 @@
+<html>
+
+
+
+
+<script>
+
+const queryString = window.location.search;
+console.log(queryString);
+const urlParams = new URLSearchParams(queryString);
+const ref = urlParams.get('ref').split(" ");
+var book = ref[0];
+var chapter = ref[1];
+console.log(book + " " + chapter);
+</script>
+
+</html>
