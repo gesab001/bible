@@ -45,6 +45,7 @@ function showChapter(_bible){
 		 
 	   }
 	   divEl.innerHTML = textString;
+
 }
 
 function getChapter(){
@@ -86,6 +87,7 @@ function nextChapter(){
 		 
 	   }
 	   divEl.innerHTML = textString;
+	   	   window.scrollTo(0, 0);
 	}catch(err){
        console.log(err.message);
 	       divEl.innerHTML = "";
@@ -105,6 +107,7 @@ function nextChapter(){
 		 
 	   }
 	   divEl.innerHTML = textString;
+	   	   window.scrollTo(0, 0);  
     }	
    
 }
@@ -128,6 +131,8 @@ function previousChapter(){
 				 
 			   }
 			   divEl.innerHTML = textString;
+			   	   	   window.scrollTo(0, 0);  
+
 	   }
 	   catch(err){
 	       console.log(err.message);
@@ -148,6 +153,8 @@ function previousChapter(){
 				 
 			   }
 			   divEl.innerHTML = textString;
+			   	   	   window.scrollTo(0, 0);  
+
 	   }
    
 }
